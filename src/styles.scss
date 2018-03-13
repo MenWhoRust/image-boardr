@@ -1,0 +1,19 @@
+@import "~shards-ui/dist/css/shards.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+app-gallery {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+}
+
+app-list-item {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+}

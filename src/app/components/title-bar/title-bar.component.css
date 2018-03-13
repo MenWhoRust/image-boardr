@@ -1,0 +1,13 @@
+#title-bar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.title-bar-container {
+  height: 30px;
+  overflow: hidden;
+}
+
+#title-bar {
+  color: #18FF94;
+}

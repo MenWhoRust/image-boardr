@@ -1,0 +1,40 @@
+.item {
+  float: left !important;
+}
+
+.gallery {
+  flex: 1;
+  background-color: black;
+}
+
+.flex-gallery {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+  overflow: auto;
+}
+
+.row-height {
+  min-height: 100vh;
+}
+
+.image-div {
+  min-height: 200px;
+  min-width: 300px;
+}
+
+app-lightbox {
+  cursor: pointer;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+  background: red;
+}
+
+.my-pagination /deep/ .ngx-pagination a, .ngx-pagination button {
+  color: white;
+}
+
+
+
+
