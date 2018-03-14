@@ -9,11 +9,7 @@ import {NgxElectronModule} from 'ngx-electron';
 import {SearchBarComponent} from './components/search-bar/search-bar.component';
 import {GalleryComponent} from './components/gallery/gallery.component';
 import {XmlParserService} from './services/xml-parser.service';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {NgMasonryGridModule} from 'ng-masonry-grid';
-import {VirtualScrollModule} from 'angular2-virtual-scroll';
-import {ListItemComponent} from './components/list-item/list-item.component';
-import {InfiniteListComponent} from './components/infinite-list/infinite-list.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LightboxComponent} from './components/lightbox/lightbox.component';
@@ -27,8 +23,6 @@ import {LightboxComponent} from './components/lightbox/lightbox.component';
     TitleBarComponent,
     SearchBarComponent,
     GalleryComponent,
-    ListItemComponent,
-    InfiniteListComponent,
     LightboxComponent
 
   ],
@@ -36,9 +30,7 @@ import {LightboxComponent} from './components/lightbox/lightbox.component';
     BrowserModule,
     HttpClientModule,
     NgxElectronModule,
-    InfiniteScrollModule,
     NgMasonryGridModule,
-    VirtualScrollModule,
     NgxPaginationModule,
     BrowserAnimationsModule
   ],

@@ -1,8 +1,0 @@
-<virtual-scroll
-  [items]="buffer"
-  (update)="scrollItems = $event"
-  (end)="fetchMore($event)">
-  <app-list-item *ngFor="let item of scrollItems" [item]="item.post"></app-list-item>
-  <div *ngIf="loading" class="loader">Loading...</div>
-</virtual-scroll>
-<button (click)="reset()"> press me</button>
