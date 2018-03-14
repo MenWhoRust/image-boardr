@@ -10,7 +10,9 @@
     <i class="fas fa-times"></i>
   </div>
   <div class="modal-content">
-    <img class="div-img" *ngIf="isOpen" src="{{fileUrl}}">
+    <div *ngIf="!isLoaded" class="loader"></div>
+    <img class="div-img" [style.display]="isLoaded ? '' : 'none'" *ngIf="isOpen" src="{{fileUrl}}"
+         (load)="isLoaded = true;  log();">
   </div>
   <div class="caption-container">
     <div class="row justify-content-center">

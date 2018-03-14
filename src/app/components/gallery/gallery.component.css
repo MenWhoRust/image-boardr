@@ -27,7 +27,7 @@ app-lightbox {
 }
 
 .my-pagination /deep/ .ngx-pagination .current {
-  background: greenyellow;
+  background: #28a745;
 }
 
 .my-pagination /deep/ .ngx-pagination a, .ngx-pagination button {
@@ -36,8 +36,6 @@ app-lightbox {
 
 .my-pagination /deep/ .ngx-pagination {
   margin-bottom: 0;
-  -webkit-margin-before: 0;
-  -webkit-margin-after: 0;
 }
 
 

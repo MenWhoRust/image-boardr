@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
+import {AppModule} from '../../app.module';
+import {AppComponent} from '../../app.component';
 
 @Component({
   selector: 'app-lightbox',
@@ -24,12 +26,18 @@ export class LightboxComponent implements OnInit {
 
   isOpen = false;
   isHovered = false;
+  isLoaded = false;
+
+  log() {
+    AppComponent.log('not loaded', this.isLoaded);
+  }
 
   constructor(private electron: ElectronService) {
   }
 
   ngOnInit() {
     this.tagsArray = this.tags.split(' ');
+    AppComponent.log('not loaded', this.isLoaded);
   }
 
   download(fileUrl) {
