@@ -1,15 +1,23 @@
-<div class="col-auto p-0 m-2 img-div hover-shadow" (click)="openModal(id)">
-  <img src="{{previewUrl}}" class="img-fluid">
+<div class="col-auto p-0 m-2 img-div hover-shadow" (mouseover)="isHovered = true" (mouseleave)="isHovered = false">
+  <div *ngIf="isHovered" class="action-button-absolute bg-success text-dark" (click)="download(fileUrl)">
+    <i class="fas fa-download"></i>
+  </div>
+  <img src="{{previewUrl}}" class="img-fluid" (click)="openModal()">
 </div>
 
 <div id="myModal-{{id}}" class="modal container-fluid p-0">
-  <div class="close-div" (click)="closeModal(id)">
-    <img class="close img-fluid" src="./assets/icons/close.png"/>
+  <div class="action-button-absolute bg-success text-dark" (click)="closeModal()">
+    <i class="fas fa-times"></i>
   </div>
   <div class="modal-content">
     <img class="div-img" *ngIf="isOpen" src="{{fileUrl}}">
   </div>
   <div class="caption-container">
+    <div class="row justify-content-center">
+      <div class="action-button-relative bg-success text-dark" (click)="download(fileUrl)">
+        <i class="fas fa-download"></i>
+      </div>
+    </div>
     <p id="caption"><span class="btn btn-pill btn-success m-1" *ngFor="let tag of tagsArray">{{tag}}</span></p>
   </div>
 </div>

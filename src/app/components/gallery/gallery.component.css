@@ -4,7 +4,6 @@
 
 .gallery {
   flex: 1;
-  background-color: black;
 }
 
 .flex-gallery {
@@ -28,11 +27,17 @@ app-lightbox {
 }
 
 .my-pagination /deep/ .ngx-pagination .current {
-  background: red;
+  background: greenyellow;
 }
 
 .my-pagination /deep/ .ngx-pagination a, .ngx-pagination button {
   color: white;
+}
+
+.my-pagination /deep/ .ngx-pagination {
+  margin-bottom: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
 }
 
 

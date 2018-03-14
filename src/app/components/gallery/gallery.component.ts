@@ -31,11 +31,6 @@ export class GalleryComponent implements OnInit {
 
   }
 
-  log(event) {
-    console.log('update');
-    console.log(event);
-  }
-
   goToPage(page: number) {
     this.getPosts.getPosts<Konachan>(this.pageSize, page, this.tags, this.rating)
       .subscribe((response) => {
