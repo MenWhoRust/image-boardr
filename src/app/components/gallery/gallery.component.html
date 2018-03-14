@@ -1,13 +1,27 @@
 <div class="container-fluid d-flex flex-column gallery bg-light p-0">
   <app-search-bar></app-search-bar>
   <div class="container-fluid flex-gallery">
-      <div class="row d-flex justify-content-center align-items-center row-height">
-        <app-lightbox [previewUrl]="i.preview_url" [fileUrl]="i.file_url" [id]="x" [tags]="i.tags"
-                      *ngFor="let i of xml | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}; let x = index"></app-lightbox>
-      </div>
-    </div>
-  <div class="row d-flex justify-content-center py-2 bg-dark">
-      <pagination-controls class="my-pagination" (pageChange)="goToPage($event)"></pagination-controls>
+    <div #galleryContainer class="row d-flex justify-content-center row-height">
+      <ng-masonry-grid
+        [masonryOptions]="{ addStatus: 'append', transitionDuration: '0.5s', columnWidth: 300, gutter: 5, fitWidth: true, stagger: 30 }"
+        [useAnimation]="true"
+        [useImagesLoaded]="true">
+        <ng-masonry-grid-item id="{{'masonry-item-'+i}}"
+                              *ngFor="let i of xml | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}; let x = index">
+          <div class="col-auto p-0 img-clickable hover-shadow d-flex align-items-center" (mouseover)="showDlButton(x)"
+               (mouseleave)="hideDlButton(x)">
+            <div id="dl-button-{{x}}" class="action-button-absolute action-button-color display-none text-dark"
+                 (click)="download(i.file_url)">
+              <i class="fas fa-download"></i>
+            </div>
+            <img src="{{i.preview_url}}" class="img-fluid" (click)="createLightbox(i.file_url, i.tags)">
+          </div>
+        </ng-masonry-grid-item>
+      </ng-masonry-grid>
     </div>
   </div>
+  <div class="row d-flex justify-content-center py-2 bg-dark">
+    <pagination-controls class="my-pagination" (pageChange)="goToPage($event)"></pagination-controls>
+  </div>
+</div>
 

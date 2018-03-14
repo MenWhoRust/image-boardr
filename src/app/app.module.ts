@@ -16,14 +16,12 @@ import {ListItemComponent} from './components/list-item/list-item.component';
 import {InfiniteListComponent} from './components/infinite-list/infinite-list.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GalleryModule} from '@ngx-gallery/core';
-import {GallerizeModule} from '@ngx-gallery/gallerize';
-import {LightboxModule} from '@ngx-gallery/lightbox';
 import {LightboxComponent} from './components/lightbox/lightbox.component';
 
 
 
 @NgModule({
+  entryComponents: [LightboxComponent],
   declarations: [
     AppComponent,
     TitleBarComponent,
@@ -31,7 +29,8 @@ import {LightboxComponent} from './components/lightbox/lightbox.component';
     GalleryComponent,
     ListItemComponent,
     InfiniteListComponent,
-    LightboxComponent,
+    LightboxComponent
+
   ],
   imports: [
     BrowserModule,
@@ -41,10 +40,7 @@ import {LightboxComponent} from './components/lightbox/lightbox.component';
     NgMasonryGridModule,
     VirtualScrollModule,
     NgxPaginationModule,
-    BrowserAnimationsModule,
-    GalleryModule.forRoot(),
-    LightboxModule.forRoot(),
-    GallerizeModule
+    BrowserAnimationsModule
   ],
   providers: [
     GetPostsService,

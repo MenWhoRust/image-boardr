@@ -1,7 +1,7 @@
 .modal {
   margin-top: 30px;
   margin-bottom: 30px;
-  display: none;
+  display: flex;
   position: absolute;
   height: calc(100vh - 30px);
   background-color: black;
@@ -21,30 +21,6 @@
   height: 100%;
   object-fit: contain;
   object-position: center center;
-}
-
-.action-button-relative {
-  position: relative;
-  z-index: 999;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-}
-
-.action-button-absolute {
-  position: absolute;
-  z-index: 999;
-  top: 5px;
-  right: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
 }
 
 .svg-inline--fa {
@@ -69,30 +45,4 @@
   padding: 30px;
 }
 
-img.hover-shadow {
-  transition: 0.3s
-}
 
-.hover-shadow:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
-}
-
-.loader {
-  position: absolute;
-  z-index: 999;
-  border: 8px solid rgba(0, 0, 0, 0);
-  border-top: 8px solid #28a745;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}

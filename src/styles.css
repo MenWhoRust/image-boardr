@@ -17,3 +17,59 @@ app-list-item {
   flex-flow: column;
   flex: 1;
 }
+
+.action-button-absolute {
+  position: absolute;
+  z-index: 999;
+  top: 5px;
+  right: 5px;
+  background-color: #28a745;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+
+}
+
+.action-button-relative {
+  position: relative;
+  z-index: 999;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.action-button-color {
+  background-color: #28a745;
+  transition: 0.3s;
+}
+
+.action-button-color:hover {
+  background-color: #31c954;
+}
+
+.loader {
+  position: absolute;
+  z-index: 999;
+  border: 8px solid rgba(0, 0, 0, 0);
+  border-top: 8px solid #28a745;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

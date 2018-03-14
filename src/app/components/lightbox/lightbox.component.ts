@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {AppModule} from '../../app.module';
 import {AppComponent} from '../../app.component';
+import {createComponent} from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-lightbox',
@@ -9,49 +10,42 @@ import {AppComponent} from '../../app.component';
   styleUrls: ['./lightbox.component.css']
 })
 export class LightboxComponent implements OnInit {
-
-  @Input()
-  previewUrl: string;
+  @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
   fileUrl: string;
 
   @Input()
-  id: number;
+  tags: string[];
 
-  @Input()
-  tags: string;
-
-  tagsArray: string[];
-
-  isOpen = false;
-  isHovered = false;
+  isFirstLoad = true;
   isLoaded = false;
 
-  log() {
-    AppComponent.log('not loaded', this.isLoaded);
+  log(event) {
+    AppComponent.log('not loaded', event);
   }
 
   constructor(private electron: ElectronService) {
   }
 
   ngOnInit() {
-    this.tagsArray = this.tags.split(' ');
     AppComponent.log('not loaded', this.isLoaded);
+  }
+
+  loaded() {
+    this.isLoaded = !this.isLoaded;
   }
 
   download(fileUrl) {
     this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
   }
 
-  openModal() {
-    document.getElementById('myModal-' + this.id).style.display = 'flex';
-    this.isOpen = true;
+  closeModal() {
+    this.destroyCheck.emit('kill me');
   }
 
-  closeModal() {
-    document.getElementById('myModal-' + this.id).style.display = 'none';
-    this.isOpen = false;
+  getDestroyEvent() {
+    return this.destroyCheck;
   }
 
 }
