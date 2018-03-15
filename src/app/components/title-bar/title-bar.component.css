@@ -11,3 +11,13 @@
 #title-bar {
   color: #18FF94;
 }
+
+.btn-flex {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+svg {
+  flex: 1;
+}

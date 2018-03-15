@@ -54,4 +54,8 @@ img.hover-shadow {
   cursor: pointer;
 }
 
+ng-masonry-grid {
+  margin: auto;
+}
+
 

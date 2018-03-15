@@ -1,9 +1,9 @@
 <div class="container-fluid d-flex flex-column gallery bg-light p-0">
   <app-search-bar></app-search-bar>
   <div class="container-fluid flex-gallery">
-    <div #galleryContainer class="row d-flex justify-content-center row-height">
+    <div #galleryContainer class="row-height">
       <ng-masonry-grid
-        [masonryOptions]="{ addStatus: 'append', transitionDuration: '0.5s', columnWidth: 300, gutter: 5, fitWidth: true, stagger: 30 }"
+        [masonryOptions]="{ addStatus: 'append', transitionDuration: '0.5s', columnWidth: 300, gutter: 5, fitWidth: true }"
         [useAnimation]="true"
         [useImagesLoaded]="true">
         <ng-masonry-grid-item id="{{'masonry-item-'+i}}"
