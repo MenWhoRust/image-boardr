@@ -5,14 +5,17 @@ import {ElectronService} from 'ngx-electron';
 import {LightboxComponent} from '../lightbox/lightbox.component';
 
 
+
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.css']
+  styleUrls: ['./gallery.component.css'],
+
 })
 export class GalleryComponent implements OnInit {
   @ViewChild('galleryContainer', {read: ViewContainerRef})
   container;
+
 
   xml: Post[];
   page = 1;
@@ -60,9 +63,6 @@ export class GalleryComponent implements OnInit {
           component.destroy();
         }
       });
-
-    console.log(factory);
-    console.log(component);
   }
 
   hideDlButton(id: number) {

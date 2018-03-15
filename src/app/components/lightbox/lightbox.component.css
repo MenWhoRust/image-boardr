@@ -28,12 +28,6 @@
   height: 20px;
 }
 
-.close:hover,
-.close:focus {
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .caption-container {
   text-align: center;
   background-color: black;

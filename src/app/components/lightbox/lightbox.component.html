@@ -1,11 +1,12 @@
-<div id="modal" class="modal container-fluid p-0">
+<div [@lightboxAnimate]="active" (@lightboxAnimate.done)="handleState($event)"
+     (@lightboxAnimate.start)="handleState($event)" id="modal" class="modal container-fluid p-0">
   <div class="action-button-absolute d-flex action-button-color text-dark" (click)="closeModal()">
     <i class="fas fa-times"></i>
   </div>
   <div class="modal-content">
     <div *ngIf="!isLoaded " class="loader"></div>
-    <img class="div-img" [style.display]="isLoaded ? '' : 'none'" src="{{fileUrl}}"
-         (load)="loaded();  log($event);">
+    <img [@imageFade]="isLoaded" class="div-img" src="{{fileUrl}}"
+         (load)="loaded();">
   </div>
   <div class="caption-container">
     <div class="row justify-content-center">

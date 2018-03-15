@@ -1,15 +1,32 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
-import {AppModule} from '../../app.module';
 import {AppComponent} from '../../app.component';
-import {createComponent} from '@angular/compiler/src/core';
+import {animate, query, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-lightbox',
   templateUrl: './lightbox.component.html',
-  styleUrls: ['./lightbox.component.css']
+  styleUrls: ['./lightbox.component.css'],
+  animations: [
+    trigger('lightboxAnimate', [
+      state('void', style({opacity: 0})),
+      transition(':enter', [
+        animate('250ms ease-in')
+      ]),
+      transition('true => false', [
+        animate('250ms ease-out', style({opacity: 0}))
+      ])
+    ]),
+    trigger('imageFade', [
+      state('false', style({opacity: 0})),
+      transition('false => true', [
+        animate(500)
+      ])
+    ])
+  ]
 })
 export class LightboxComponent implements OnInit {
+
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
@@ -18,18 +35,24 @@ export class LightboxComponent implements OnInit {
   @Input()
   tags: string[];
 
-  isFirstLoad = true;
   isLoaded = false;
 
-  log(event) {
-    AppComponent.log('not loaded', event);
+  active = false;
+
+  handleState(event) {
+    if (event.fromState === 'void' && event.phaseName === 'done') {
+      this.active = true;
+    }
+
+    if (event.fromState === true && event.toState === false && event.phaseName === 'done') {
+      this.destroyCheck.emit('kill me');
+    }
   }
 
   constructor(private electron: ElectronService) {
   }
 
   ngOnInit() {
-    AppComponent.log('not loaded', this.isLoaded);
   }
 
   loaded() {
@@ -41,7 +64,7 @@ export class LightboxComponent implements OnInit {
   }
 
   closeModal() {
-    this.destroyCheck.emit('kill me');
+    this.active = false;
   }
 
   getDestroyEvent() {
