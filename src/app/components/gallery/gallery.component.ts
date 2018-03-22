@@ -1,7 +1,6 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {GetPostsService} from '../../services/getposts.service';
 import {Konachan, Post} from '../../types/IKonachan';
-import {ElectronService} from 'ngx-electron';
 import {LightboxComponent} from '../lightbox/lightbox.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
@@ -31,6 +30,8 @@ export class GalleryComponent implements OnInit {
   tags = '';
   rating = 'rating:s';
 
+  isLoaded = false;
+
 
   totalItems: number;
   private _masonry: Masonry;
@@ -44,6 +45,7 @@ export class GalleryComponent implements OnInit {
       .subscribe((response) => {
         this.posts = response.posts.post;
         this.totalItems = response.posts.count;
+        this.isLoaded = true;
       });
 
   }
@@ -57,6 +59,7 @@ export class GalleryComponent implements OnInit {
           this.addItems(i);
         }
         this.page = page;
+        this.isLoaded = true;
       });
     }, 500);
 
@@ -87,7 +90,7 @@ export class GalleryComponent implements OnInit {
       if (this._masonry) {
         this._masonry.removeAllItems()
           .subscribe((items: MasonryGridItem) => {
-            // remove all items from the list
+            this.isLoaded = false;
             this.posts = [];
           });
       }
@@ -96,7 +99,7 @@ export class GalleryComponent implements OnInit {
 
   addItems(item) {
     if (this._masonry) {
-      this._masonry.setAddStatus('add'); // set status to 'add'
+      this._masonry.setAddStatus('add');
       this.posts.push(item);
     }
   }

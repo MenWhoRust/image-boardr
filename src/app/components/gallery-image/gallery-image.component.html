@@ -1,6 +1,6 @@
 <div class="p-0 img-clickable hover-shadow d-flex align-items-center bg-dark justify-content-center"
-     (mouseover)="showDlButton()"
-     (mouseleave)="hideDlButton()">
+     (mouseover)="isHovered = true;"
+     (mouseleave)=" isHovered = false;">
   <div [@animateHovered]="isHovered" class="action-button-absolute action-button-color d-flex no-opacity text-dark"
        (click)="download(post.file_url)">
     <i class="fas fa-download"></i>

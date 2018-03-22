@@ -41,14 +41,4 @@ export class GalleryImageComponent implements OnInit {
   download(fileUrl) {
     this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
   }
-
-  hideDlButton() {
-    this.isHovered = false;
-
-  }
-
-  showDlButton() {
-    this.isHovered = true;
-  }
-
 }

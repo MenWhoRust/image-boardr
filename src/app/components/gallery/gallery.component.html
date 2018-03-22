@@ -1,11 +1,13 @@
 <div class="container-fluid d-flex flex-column gallery bg-light p-0">
   <app-search-bar></app-search-bar>
   <div class="container-fluid flex-gallery">
+    <div *ngIf="!isLoaded" class="loader flex-loader"></div>
     <div #galleryContainer class="row-height">
       <ng-masonry-grid
         (onNgMasonryInit)="onNgMasonryInit($event)"
         [masonryOptions]="{ addStatus: 'append', transitionDuration: '0.5s', columnWidth: 300, gutter: 5, fitWidth: true }"
-        [useAnimation]="true">
+        [useAnimation]="true"
+        class="pt-2">
         <ng-masonry-grid-item
           *ngFor="let post of posts | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}"
           @animateImages (click)="createLightbox(post.file_url, post.tags)">

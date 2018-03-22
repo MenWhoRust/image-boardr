@@ -54,5 +54,10 @@ ng-masonry-grid-item {
   cursor: pointer;
 }
 
+.flex-loader {
+  align-self: center;
+  top: 45%;
+}
+
 
 
