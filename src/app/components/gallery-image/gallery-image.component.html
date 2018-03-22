@@ -1,0 +1,12 @@
+<div class="p-0 img-clickable hover-shadow d-flex align-items-center bg-dark justify-content-center"
+     (mouseover)="showDlButton()"
+     (mouseleave)="hideDlButton()">
+  <div [@animateHovered]="isHovered" class="action-button-absolute action-button-color d-flex no-opacity text-dark"
+       (click)="download(post.file_url)">
+    <i class="fas fa-download"></i>
+  </div>
+  <div *ngIf="!isLoaded " class="loader"></div>
+  <img src="{{post.preview_url}}" [@animateLoaded]="isLoaded" (load)="isLoaded = true"
+       [style.width]="post.actual_preview_width + 'px'" [style.height]="post.actual_preview_height + 'px'"
+       class="img-fluid">
+</div>

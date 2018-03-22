@@ -3,6 +3,8 @@ import {GetPostsService} from '../../services/getposts.service';
 import {Konachan, Post} from '../../types/IKonachan';
 import {ElectronService} from 'ngx-electron';
 import {LightboxComponent} from '../lightbox/lightbox.component';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
 
 
 
@@ -10,14 +12,20 @@ import {LightboxComponent} from '../lightbox/lightbox.component';
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css'],
+  animations: [
+    trigger('animateImages', [
+      state('void', style({opacity: 0})),
+      transition('* <=> *', [
+        animate('250ms ease-in')
+      ])
+    ])]
 
 })
 export class GalleryComponent implements OnInit {
   @ViewChild('galleryContainer', {read: ViewContainerRef})
   container;
 
-
-  xml: Post[];
+  posts: Post[];
   page = 1;
   pageSize = 50;
   tags = '';
@@ -25,31 +33,36 @@ export class GalleryComponent implements OnInit {
 
 
   totalItems: number;
+  private _masonry: Masonry;
 
 
-  constructor(private getPosts: GetPostsService, private electron: ElectronService, private resolver: ComponentFactoryResolver) {
+  constructor(private getPosts: GetPostsService, private resolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
     this.getPosts.getPosts<Konachan>(this.pageSize, this.page, this.tags, this.rating)
       .subscribe((response) => {
-        this.xml = response.posts.post;
+        this.posts = response.posts.post;
         this.totalItems = response.posts.count;
       });
 
   }
 
   goToPage(page: number) {
-    this.getPosts.getPosts<Konachan>(this.pageSize, page, this.tags, this.rating)
+    this.removeAllItems();
+    setTimeout(() => {
+      this.getPosts.getPosts<Konachan>(this.pageSize, page, this.tags, this.rating)
       .subscribe((response) => {
-        this.xml = response.posts.post;
+        for (let i of response.posts.post) {
+          this.addItems(i);
+        }
         this.page = page;
       });
+    }, 500);
+
   }
 
-  download(fileUrl) {
-    this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
-  }
+
 
   createLightbox(fileUrl: string, tags: string) {
     this.container.clear();
@@ -65,11 +78,27 @@ export class GalleryComponent implements OnInit {
       });
   }
 
-  hideDlButton(id: number) {
-    document.getElementById('dl-button-' + id).style.display = 'none';
+  onNgMasonryInit($event: Masonry) {
+    this._masonry = $event;
   }
 
-  showDlButton(id: number) {
-    document.getElementById('dl-button-' + id).style.display = 'flex';
+  removeAllItems() {
+    if (this._masonry) {
+      if (this._masonry) {
+        this._masonry.removeAllItems()
+          .subscribe((items: MasonryGridItem) => {
+            // remove all items from the list
+            this.posts = [];
+          });
+      }
+    }
   }
+
+  addItems(item) {
+    if (this._masonry) {
+      this._masonry.setAddStatus('add'); // set status to 'add'
+      this.posts.push(item);
+    }
+  }
+
 }

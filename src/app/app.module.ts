@@ -13,6 +13,7 @@ import {NgMasonryGridModule} from 'ng-masonry-grid';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LightboxComponent} from './components/lightbox/lightbox.component';
+import {GalleryImageComponent} from './components/gallery-image/gallery-image.component';
 
 
 
@@ -23,7 +24,8 @@ import {LightboxComponent} from './components/lightbox/lightbox.component';
     TitleBarComponent,
     SearchBarComponent,
     GalleryComponent,
-    LightboxComponent
+    LightboxComponent,
+    GalleryImageComponent
 
   ],
   imports: [

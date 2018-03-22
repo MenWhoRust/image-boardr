@@ -3,24 +3,18 @@
   <div class="container-fluid flex-gallery">
     <div #galleryContainer class="row-height">
       <ng-masonry-grid
+        (onNgMasonryInit)="onNgMasonryInit($event)"
         [masonryOptions]="{ addStatus: 'append', transitionDuration: '0.5s', columnWidth: 300, gutter: 5, fitWidth: true }"
-        [useAnimation]="true"
-        [useImagesLoaded]="true">
-        <ng-masonry-grid-item id="{{'masonry-item-'+i}}"
-                              *ngFor="let i of xml | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}; let x = index">
-          <div class="col-auto p-0 img-clickable hover-shadow d-flex align-items-center" (mouseover)="showDlButton(x)"
-               (mouseleave)="hideDlButton(x)">
-            <div id="dl-button-{{x}}" class="action-button-absolute action-button-color display-none text-dark"
-                 (click)="download(i.file_url)">
-              <i class="fas fa-download"></i>
-            </div>
-            <img src="{{i.preview_url}}" class="img-fluid" (click)="createLightbox(i.file_url, i.tags)">
-          </div>
+        [useAnimation]="true">
+        <ng-masonry-grid-item
+          *ngFor="let post of posts | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}"
+          @animateImages (click)="createLightbox(post.file_url, post.tags)">
+          <app-gallery-image [post]="post"></app-gallery-image>
         </ng-masonry-grid-item>
       </ng-masonry-grid>
     </div>
   </div>
-  <div class="row d-flex justify-content-center py-2 bg-dark">
+  <div class="row justify-content-center py-2 bg-dark">
     <pagination-controls class="my-pagination" (pageChange)="goToPage($event)"></pagination-controls>
   </div>
 </div>
