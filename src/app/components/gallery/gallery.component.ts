@@ -1,4 +1,7 @@
-import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, OnInit, ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {GetPostsService} from '../../services/getposts.service';
 import {Konachan, Post} from '../../types/IKonachan';
 import {LightboxComponent} from '../lightbox/lightbox.component';
@@ -23,6 +26,9 @@ import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
 export class GalleryComponent implements OnInit {
   @ViewChild('galleryContainer', {read: ViewContainerRef})
   container;
+
+  @ViewChild('flexGallery')
+  panel: ElementRef;
 
   posts: Post[];
   page = 1;
@@ -51,7 +57,9 @@ export class GalleryComponent implements OnInit {
   }
 
   goToPage(page: number) {
+    this.panel.nativeElement.scrollTop = 0;
     this.removeAllItems();
+
     setTimeout(() => {
       this.getPosts.getPosts<Konachan>(this.pageSize, page, this.tags, this.rating)
       .subscribe((response) => {

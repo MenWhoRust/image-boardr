@@ -1,6 +1,6 @@
 <div class="container-fluid d-flex flex-column gallery bg-light p-0">
   <app-search-bar></app-search-bar>
-  <div class="container-fluid flex-gallery">
+  <div #flexGallery class="container-fluid flex-gallery">
     <div *ngIf="!isLoaded" class="loader flex-loader"></div>
     <div #galleryContainer class="row-height">
       <ng-masonry-grid
