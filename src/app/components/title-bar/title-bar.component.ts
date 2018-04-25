@@ -31,11 +31,9 @@ export class TitleBarComponent implements OnInit {
       this.electron.remote.getCurrentWindow().setPosition(this.winPos[0], this.winPos[1], true);
       this.electron.remote.getCurrentWindow().setSize(this.winSize[0], this.winSize[1], true);
     }
-    console.log(this.electron.remote.getCurrentWindow().isMaximized());
   }
 
   Exit() {
     this.electron.process.exit();
-
   }
 }

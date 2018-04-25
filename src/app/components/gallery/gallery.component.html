@@ -1,5 +1,5 @@
 <div class="container-fluid d-flex flex-column gallery bg-light p-0">
-  <app-search-bar></app-search-bar>
+  <app-search-bar [searchTerms]="defaultSearchTerms" (ratingChange)="goToPage(1,$event)"></app-search-bar>
   <div #flexGallery class="container-fluid flex-gallery">
     <div *ngIf="!isLoaded" class="loader flex-loader"></div>
     <div #galleryContainer class="row-height">

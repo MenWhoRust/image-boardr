@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {XmlParserService} from './xml-parser.service';
-import {retry, switchMap} from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/retry';
+import {SearchTerms} from '../types/SearchTerms';
 
 
 @Injectable()
@@ -10,10 +12,12 @@ export class GetPostsService {
   constructor(private  http: HttpClient, private parser: XmlParserService) {
   }
 
-  getPosts<T>(pageSize: number, page: number, tags: string, rating: string) {
-    return this.http.get(`https://konachan.com/post.xml?limit=${pageSize}&page=${page}&tags=${rating}+${tags}`, {responseType: 'text'})
-      .pipe(retry(5))
-      .pipe(switchMap(x => this.parser.ParseXml<T>(x)));
+  getPosts<T>(searchTerms: SearchTerms, page: number) {
+    return this.http.get(
+      `https://konachan.com/post.xml?limit=${searchTerms.pageSize}&page=${page}&tags=${searchTerms.getRatingString}+${searchTerms.tags}`,
+      {responseType: 'text'})
+      .retry(5)
+      .map(x => this.parser.ParseXml<T>(x));
   }
 }
 

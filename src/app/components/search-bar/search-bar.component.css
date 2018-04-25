@@ -1,0 +1,16 @@
+.search-bar {
+  border: black dotted 2px;
+}
+
+.filter-button {
+  border-color: slategrey;
+  background-color: transparent;
+}
+.filter-button:focus{
+  webkit-box-shadow: initial;
+  box-shadow: initial;
+}
+.filter-button:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,.05), 0 4px 10px rgba(90,97,105,.25);
+}
+

@@ -7,7 +7,7 @@ import {Konachan, Post} from '../../types/IKonachan';
 import {LightboxComponent} from '../lightbox/lightbox.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
-
+import {SearchTerms} from '../../types/SearchTerms';
 
 
 @Component({
@@ -33,52 +33,66 @@ export class GalleryComponent implements OnInit {
   posts: Post[];
   page = 1;
   pageSize = 50;
-  tags = '';
-  rating = 'rating:s';
+  defaultSearchTerms: SearchTerms;
 
   isLoaded = false;
-
+  isFetching: boolean;
 
   totalItems: number;
   private _masonry: Masonry;
 
 
   constructor(private getPosts: GetPostsService, private resolver: ComponentFactoryResolver) {
+    this.defaultSearchTerms = new SearchTerms('', this.pageSize, true, false, false);
   }
 
   ngOnInit() {
-    this.getPosts.getPosts<Konachan>(this.pageSize, this.page, this.tags, this.rating)
+    this.getPosts.getPosts<Konachan>(this.defaultSearchTerms, this.page)
       .subscribe((response) => {
-        this.posts = response.posts.post;
-        this.totalItems = response.posts.count;
-        this.isLoaded = true;
+        response.then(value => {
+          this.posts = value.posts.post;
+          this.totalItems = value.posts.count;
+          this.isLoaded = true;
+        });
       });
-
   }
 
-  goToPage(page: number) {
+  goToPage(page: number, searchTerms?: SearchTerms) {
+    if (this.isFetching) {
+      return;
+    }
+    if (searchTerms === undefined) {
+      searchTerms = this.defaultSearchTerms;
+    }
+
+    this.isFetching = true;
     this.panel.nativeElement.scrollTop = 0;
     this.removeAllItems();
 
     setTimeout(() => {
-      this.getPosts.getPosts<Konachan>(this.pageSize, page, this.tags, this.rating)
-      .subscribe((response) => {
-        for (let i of response.posts.post) {
-          this.addItems(i);
-        }
-        this.page = page;
-        this.isLoaded = true;
-      });
+      this.getPosts.getPosts<Konachan>(searchTerms, page)
+        .subscribe((response) => {
+          response.then(value => {
+            for (let i of value.posts.post) {
+              this.addItems(i);
+            }
+            this.pageSize = searchTerms.pageSize;
+            this.totalItems = value.posts.count;
+            this.page = page;
+            this.isLoaded = true;
+            this.isFetching = false;
+            console.log('complete ' + this.page);
+          });
+        });
     }, 500);
-
   }
-
-
 
   createLightbox(fileUrl: string, tags: string) {
     this.container.clear();
+
     const factory: ComponentFactory<LightboxComponent> = this.resolver.resolveComponentFactory(LightboxComponent);
     const component: ComponentRef<LightboxComponent> = this.container.createComponent(factory);
+
     component.instance.fileUrl = fileUrl;
     component.instance.tags = tags.split(' ');
     component.instance.destroyCheck
@@ -111,5 +125,4 @@ export class GalleryComponent implements OnInit {
       this.posts.push(item);
     }
   }
-
 }

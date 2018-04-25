@@ -1,3 +1,22 @@
-<div class="row justify-content-center bg-secondary">
-  hello
+<div class="row justify-content-center align-items-center search-bar">
+    <button class="btn btn-squared filter-button safe-filter"
+            [ngStyle]="{'background-color': isSafe ? '#28a745' : 'white', 'color': isSafe ? 'white' : '#28a745'}"
+            (click)="isSafe = !isSafe">Safe
+    </button>
+    <button class="btn btn-squared filter-button questionable-filter"
+            [ngStyle]="{'background-color': isQuestionable ? '#F1A001' : 'white', 'color': isQuestionable ? 'white' : '#F1A001'}"
+            (click)="isQuestionable = !isQuestionable">Questionable
+    </button>
+    <button class="btn btn-squared filter-button explicit-filter"
+            [ngStyle]="{'background-color': isExplicit ? '#BF0000' : 'white', 'color': isExplicit ? 'white' : '#BF0000'}"
+            (click)="isExplicit = !isExplicit">Explicit
+    </button>
+  <input [(ngModel)]="tags" type="text" title="Search Terms" placeholder="Tags...">
+  <select [(ngModel)]="pageSize" title="Number of Images">
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="200">200</option>
+  </select>
+  <button class="btn btn-squared" (click)="submitSearch()">Search</button>
 </div>
