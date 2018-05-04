@@ -2,7 +2,8 @@
   <app-search-bar [searchTerms]="defaultSearchTerms" (ratingChange)="goToPage(1,$event)"></app-search-bar>
   <div #flexGallery class="container-fluid flex-gallery">
     <div *ngIf="!isLoaded" class="loader flex-loader"></div>
-    <div #galleryContainer class="row-height">
+    <app-error-display *ngIf="isInErrorState" [errorMessage]="errorMessage"></app-error-display>
+    <div [ngStyle]="{'display': isInErrorState ? 'none': 'block'}" #galleryContainer class="row-height">
       <ng-masonry-grid
         (onNgMasonryInit)="onNgMasonryInit($event)"
         [masonryOptions]="{ addStatus: 'append', transitionDuration: '0.5s', columnWidth: 300, gutter: 5, fitWidth: true }"

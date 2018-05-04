@@ -8,6 +8,7 @@ import {LightboxComponent} from '../lightbox/lightbox.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
 import {SearchTerms} from '../../types/SearchTerms';
+import {isNullOrUndefined} from 'util';
 
 
 @Component({
@@ -30,16 +31,19 @@ export class GalleryComponent implements OnInit {
   @ViewChild('flexGallery')
   panel: ElementRef;
 
-  posts: Post[];
+  posts: Post[] = [];
   page = 1;
   pageSize = 50;
   defaultSearchTerms: SearchTerms;
 
   isLoaded = false;
   isFetching: boolean;
+  isInErrorState = false;
 
   totalItems: number;
   private _masonry: Masonry;
+
+  errorMessage: string;
 
 
   constructor(private getPosts: GetPostsService, private resolver: ComponentFactoryResolver) {
@@ -50,10 +54,18 @@ export class GalleryComponent implements OnInit {
     this.getPosts.getPosts<Konachan>(this.defaultSearchTerms, this.page)
       .subscribe((response) => {
         response.then(value => {
-          this.posts = value.posts.post;
           this.totalItems = value.posts.count;
+          for (let i of value.posts.post) {
+            this.addItems(i);
+          }
           this.isLoaded = true;
         });
+      }, (error: Response) => {
+        if (error.status === 0) {
+          this.isLoaded = true;
+          this.isInErrorState = true;
+          this.errorMessage = 'No internet connection.';
+        }
       });
   }
 
@@ -66,25 +78,37 @@ export class GalleryComponent implements OnInit {
     }
 
     this.isFetching = true;
+    this.isInErrorState = false;
     this.panel.nativeElement.scrollTop = 0;
-    this.removeAllItems();
+    if (this._masonry !== null || this._masonry !== undefined) {
+       this.removeAllItems();
+    }
 
-    setTimeout(() => {
-      this.getPosts.getPosts<Konachan>(searchTerms, page)
-        .subscribe((response) => {
-          response.then(value => {
-            for (let i of value.posts.post) {
-              this.addItems(i);
-            }
-            this.pageSize = searchTerms.pageSize;
-            this.totalItems = value.posts.count;
-            this.page = page;
-            this.isLoaded = true;
-            this.isFetching = false;
-            console.log('complete ' + this.page);
-          });
+    setTimeout( this.getPosts.getPosts<Konachan>(searchTerms, page)
+      .subscribe((response) => {
+        response.then(value => {
+          this.pageSize = searchTerms.pageSize;
+          this.totalItems = value.posts.count;
+          for (let i of value.posts.post) {
+            this.addItems(i);
+          }
+          this.page = page;
+          this.isLoaded = true;
+          this.isFetching = false;
+          console.log('complete ' + this.page);
         });
-    }, 500);
+      }, (error: Response) => {
+        if (error.status === 0) {
+          this.removeAllItems();
+          setTimeout(() => {
+            this.isLoaded = true;
+            this.isInErrorState = true;
+            this.isFetching = false;
+            this.errorMessage = 'No internet connection.';
+          }, 500);
+        }
+      }), 500);
+
   }
 
   createLightbox(fileUrl: string, tags: string) {
@@ -108,7 +132,6 @@ export class GalleryComponent implements OnInit {
   }
 
   removeAllItems() {
-    if (this._masonry) {
       if (this._masonry) {
         this._masonry.removeAllItems()
           .subscribe((items: MasonryGridItem) => {
@@ -116,7 +139,6 @@ export class GalleryComponent implements OnInit {
             this.posts = [];
           });
       }
-    }
   }
 
   addItems(item) {

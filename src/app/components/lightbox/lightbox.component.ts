@@ -65,9 +65,4 @@ export class LightboxComponent implements OnInit {
   closeModal() {
     this.active = false;
   }
-
-  getDestroyEvent() {
-    return this.destroyCheck;
-  }
-
 }

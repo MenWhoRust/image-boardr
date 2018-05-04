@@ -16,6 +16,7 @@ import {LightboxComponent} from './components/lightbox/lightbox.component';
 import {GalleryImageComponent} from './components/gallery-image/gallery-image.component';
 import {CheckRatingService} from './services/check-rating.service';
 import {FormsModule} from '@angular/forms';
+import { ErrorDisplayComponent } from './components/error-display/error-display.component';
 
 
 
@@ -27,7 +28,8 @@ import {FormsModule} from '@angular/forms';
     SearchBarComponent,
     GalleryComponent,
     LightboxComponent,
-    GalleryImageComponent
+    GalleryImageComponent,
+    ErrorDisplayComponent
 
   ],
   imports: [
