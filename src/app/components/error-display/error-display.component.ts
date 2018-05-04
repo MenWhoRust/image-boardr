@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {IErrorMessage} from '../../types/IErrorMessage';
 
 @Component({
   selector: 'app-error-display',
@@ -8,7 +9,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ErrorDisplayComponent implements OnInit {
 
   @Input()
-  errorMessage: string;
+  errorMessage: IErrorMessage;
 
   constructor() { }
 

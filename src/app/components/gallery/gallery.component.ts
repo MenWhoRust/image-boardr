@@ -9,6 +9,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
 import {SearchTerms} from '../../types/SearchTerms';
 import {isNullOrUndefined} from 'util';
+import {Observable} from 'rxjs/Observable';
+import {IErrorMessage} from '../../types/IErrorMessage';
 
 
 @Component({
@@ -43,7 +45,7 @@ export class GalleryComponent implements OnInit {
   totalItems: number;
   private _masonry: Masonry;
 
-  errorMessage: string;
+  errorMessage: IErrorMessage;
 
 
   constructor(private getPosts: GetPostsService, private resolver: ComponentFactoryResolver) {
@@ -51,22 +53,7 @@ export class GalleryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPosts.getPosts<Konachan>(this.defaultSearchTerms, this.page)
-      .subscribe((response) => {
-        response.then(value => {
-          this.totalItems = value.posts.count;
-          for (let i of value.posts.post) {
-            this.addItems(i);
-          }
-          this.isLoaded = true;
-        });
-      }, (error: Response) => {
-        if (error.status === 0) {
-          this.isLoaded = true;
-          this.isInErrorState = true;
-          this.errorMessage = 'No internet connection.';
-        }
-      });
+    this.goToPage(this.page, this.defaultSearchTerms);
   }
 
   goToPage(page: number, searchTerms?: SearchTerms) {
@@ -85,18 +72,25 @@ export class GalleryComponent implements OnInit {
     }
 
     setTimeout( this.getPosts.getPosts<Konachan>(searchTerms, page)
-      .subscribe((response) => {
-        response.then(value => {
-          this.pageSize = searchTerms.pageSize;
-          this.totalItems = value.posts.count;
-          for (let i of value.posts.post) {
-            this.addItems(i);
-          }
-          this.page = page;
-          this.isLoaded = true;
+      .subscribe(response => {
+        if (Number(response.posts.count) === 0) {
+          this.isInErrorState = true;
           this.isFetching = false;
-          console.log('complete ' + this.page);
-        });
+          this.errorMessage = {
+            messageTitle: 'Could not find any results',
+            messageContent: 'Seems there are no images with those tags'
+          };
+          return;
+        }
+        this.pageSize = searchTerms.pageSize;
+        this.totalItems = response.posts.count;
+        for (let i of response.posts.post) {
+          this.addItems(i);
+        }
+        this.page = page;
+        this.isLoaded = true;
+        this.isFetching = false;
+        console.log('complete ' + this.page);
       }, (error: Response) => {
         if (error.status === 0) {
           this.removeAllItems();
@@ -104,7 +98,9 @@ export class GalleryComponent implements OnInit {
             this.isLoaded = true;
             this.isInErrorState = true;
             this.isFetching = false;
-            this.errorMessage = 'No internet connection.';
+            this.errorMessage = {
+              messageTitle: 'No Internet Connection.',
+              messageContent: 'You can retry by clicking the search button.'};
           }, 500);
         }
       }), 500);
