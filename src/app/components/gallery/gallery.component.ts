@@ -105,7 +105,7 @@ export class GalleryComponent implements OnInit {
             this.errorMessage = {
               messageTitle: 'No Internet Connection.',
               messageContent: 'You can retry by clicking the search button.'};
-          }, 500);
+          }, 600);
         }
       }), 500);
 
