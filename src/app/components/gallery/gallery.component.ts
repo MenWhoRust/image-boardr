@@ -64,6 +64,9 @@ export class GalleryComponent implements OnInit {
       searchTerms = this.defaultSearchTerms;
     }
 
+    if (this.isLoaded) {
+      this.isLoaded = !this.isLoaded;
+    }
     this.isFetching = true;
     this.isInErrorState = false;
     this.panel.nativeElement.scrollTop = 0;
@@ -75,6 +78,7 @@ export class GalleryComponent implements OnInit {
       .subscribe(response => {
         if (Number(response.posts.count) === 0) {
           this.isInErrorState = true;
+          this.isLoaded = true;
           this.isFetching = false;
           this.errorMessage = {
             messageTitle: 'Could not find any results',
