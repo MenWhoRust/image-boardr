@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
+import {IWindowSettings} from '../../types/IWindowSettings';
+import {t} from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-title-bar',
@@ -11,11 +13,15 @@ export class TitleBarComponent implements OnInit {
   winSize: number[];
   winPos: number[];
 
+  windowSettings: IWindowSettings;
+
   constructor(private electron: ElectronService) {
 
   }
 
   ngOnInit() {
+    this.winSize = this.electron.remote.getCurrentWindow().getSize();
+    this.winPos = this.electron.remote.getCurrentWindow().getPosition();
   }
 
   Minimise() {
@@ -34,6 +40,6 @@ export class TitleBarComponent implements OnInit {
   }
 
   Exit() {
-    this.electron.process.exit();
+    this.electron.ipcRenderer.send('quit');
   }
 }
