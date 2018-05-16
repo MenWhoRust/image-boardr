@@ -18,7 +18,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ]),
     trigger('imageFade', [
       state('false', style({opacity: 0})),
-      transition('false => true', [
+      state('true', style({opacity: 1})),
+      transition('false <=> true', [
         animate(500)
       ])
     ])

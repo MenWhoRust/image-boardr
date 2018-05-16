@@ -6,7 +6,7 @@
     <i class="fas fa-download"></i>
   </div>
   <div *ngIf="!isLoaded " class="loader"></div>
-  <img src="{{post.preview_url}}" [@animateLoaded]="isLoaded" (load)="isLoaded = true"
+  <img src="{{post.preview_url}}" [@animateLoaded]="isLoaded" (load)="isLoaded = true"  (click)="createLightbox(post.file_url, post.tags)"
        [style.width]="post.actual_preview_width + 'px'" [style.height]="post.actual_preview_height + 'px'"
        class="img-fluid">
 </div>

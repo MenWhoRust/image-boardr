@@ -11,8 +11,8 @@
         class="pt-2">
         <ng-masonry-grid-item
           *ngFor="let post of posts | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}"
-          @animateImages (click)="createLightbox(post.file_url, post.tags)">
-          <app-gallery-image [post]="post"></app-gallery-image>
+          @animateImages>
+          <app-gallery-image [container]="container" [post]="post"></app-gallery-image>
         </ng-masonry-grid-item>
       </ng-masonry-grid>
     </div>

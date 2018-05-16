@@ -28,7 +28,7 @@ import {IErrorMessage} from '../../types/IErrorMessage';
 })
 export class GalleryComponent implements OnInit {
   @ViewChild('galleryContainer', {read: ViewContainerRef})
-  container;
+  container: ViewContainerRef;
 
   @ViewChild('flexGallery')
   panel: ElementRef;
@@ -48,7 +48,7 @@ export class GalleryComponent implements OnInit {
   errorMessage: IErrorMessage;
 
 
-  constructor(private getPosts: GetPostsService, private resolver: ComponentFactoryResolver) {
+  constructor(private getPosts: GetPostsService) {
     this.defaultSearchTerms = new SearchTerms('', this.pageSize, true, false, false);
   }
 
@@ -109,22 +109,6 @@ export class GalleryComponent implements OnInit {
         }
       }), 500);
 
-  }
-
-  createLightbox(fileUrl: string, tags: string) {
-    this.container.clear();
-
-    const factory: ComponentFactory<LightboxComponent> = this.resolver.resolveComponentFactory(LightboxComponent);
-    const component: ComponentRef<LightboxComponent> = this.container.createComponent(factory);
-
-    component.instance.fileUrl = fileUrl;
-    component.instance.tags = tags.split(' ');
-    component.instance.destroyCheck
-      .subscribe(v => {
-        if (v === 'kill me') {
-          component.destroy();
-        }
-      });
   }
 
   onNgMasonryInit($event: Masonry) {

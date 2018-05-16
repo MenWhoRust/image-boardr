@@ -26,7 +26,8 @@ app.on('ready', () => {
     let winSettings = {
       isMaximised: win.isMaximized(),
       winSize: win.getSize(),
-      winPos: win.getPosition()
+      winPos: win.getPosition(),
+      winBounds: win.getBounds()
     };
     saveWinSettings(winSettings);
   });
@@ -44,10 +45,8 @@ ipcMain.on('quit', (e, args) => {
 });
 
 function saveWinSettings(settings) {
-  console.log(settings);
-  store.set('isMaximised', settings.isMaximised);
   store.set('winWidth', settings.winSize[0]);
   store.set('winHeight', settings.winSize[1]);
-  store.set('winXPos', settings.winPos[0]);
-  store.set('winYPos', settings.winPos[1]);
+  store.set('winXPos', settings.winPos[0] < 0 || settings.winPos[0] > settings.winBounds.width ? 0 : settings.winPos[0]);
+  store.set('winYPos', settings.winPos[1] < 0 || settings.winPos[1] > settings.winBounds.height ? 0 : settings.winPos[1]);
 }
