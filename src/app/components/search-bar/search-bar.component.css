@@ -1,5 +1,4 @@
 .filter-button {
-  border-color: slategrey;
   background-color: transparent;
 }
 .filter-button:focus{
@@ -8,5 +7,9 @@
 }
 .filter-button:hover {
   box-shadow: 0 5px 15px rgba(0,0,0,.05), 0 4px 10px rgba(90,97,105,.25);
+}
+
+.search-bar-colour {
+  background-color: #222222;
 }
 

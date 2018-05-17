@@ -1,1 +1,1 @@
-# BooruBrowser
+# Image-Boardr

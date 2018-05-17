@@ -1,14 +1,14 @@
-<div class="row justify-content-center align-items-center bg-secondary py-2 form-inline">
-    <button class="btn btn-squared filter-button safe-filter mx-1"
-            [ngStyle]="{'background-color': isSafe ? '#28a745' : 'white', 'color': isSafe ? 'white' : '#28a745'}"
+<div class="row justify-content-center align-items-center search-bar-colour py-2 form-inline">
+    <button class="btn btn-pill filter-button border-dark safe-filter mx-1"
+            [ngStyle]="{'background-color': isSafe ? '#28a745' : '#343a40', 'color': isSafe ? '#343a40' : '#28a745'}"
             (click)="isSafe = !isSafe">Safe
     </button>
-    <button class="btn btn-squared filter-button questionable-filter mx-1"
-            [ngStyle]="{'background-color': isQuestionable ? '#F1A001' : 'white', 'color': isQuestionable ? 'white' : '#F1A001'}"
+    <button class="btn btn-pill filter-button border-dark questionable-filter mx-1"
+            [ngStyle]="{'background-color': isQuestionable ? '#F1A001' : '#343a40', 'color': isQuestionable ? '#343a40' : '#F1A001'}"
             (click)="isQuestionable = !isQuestionable">Questionable
     </button>
-    <button class="btn btn-squared filter-button explicit-filter mx-1"
-            [ngStyle]="{'background-color': isExplicit ? '#BF0000' : 'white', 'color': isExplicit ? 'white' : '#BF0000'}"
+    <button class="btn btn-pill filter-button border-dark explicit-filter mx-1"
+            [ngStyle]="{'background-color': isExplicit ? '#BF0000' : '#343a40', 'color': isExplicit ? '#343a40' : '#BF0000'}"
             (click)="isExplicit = !isExplicit">Explicit
     </button>
   <input class="input-group-text form-control mx-1" [(ngModel)]="tags" type="text" title="Search Terms" placeholder="Tags...">
@@ -16,7 +16,6 @@
     <option value="25">25</option>
     <option value="50">50</option>
     <option value="100">100</option>
-    <option value="200">200</option>
   </select>
-  <button class="btn btn-squared mx-1" (click)="submitSearch()">Search</button>
+  <button class="btn btn-pill btn-dark mx-1" (click)="submitSearch()">Search</button>
 </div>

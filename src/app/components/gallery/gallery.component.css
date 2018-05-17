@@ -3,6 +3,8 @@
 }
 
 .gallery {
+  background: url("assets/images/background.svg") repeat;
+
   flex: 1;
 }
 

@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('booru-browser App', () => {
+describe('image-boardr App', () => {
   let page: AppPage;
 
   beforeEach(() => {
