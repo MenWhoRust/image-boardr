@@ -8,10 +8,10 @@ export class XmlParserService {
   }
 
   ParseXml<T>(xml: string) {
-    return new Promise<T>(resolve => {
+    let xmlResult;
       parseString(xml, {mergeAttrs: true, explicitArray: false}, (err, result: T) => {
-        resolve(result);
+        xmlResult = result;
       });
-    });
+      return xmlResult;
   }
 }

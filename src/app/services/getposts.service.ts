@@ -4,7 +4,6 @@ import {XmlParserService} from './xml-parser.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/retry';
 import {SearchTerms} from '../types/SearchTerms';
-import 'rxjs/add/operator/switchMap';
 
 
 @Injectable()
@@ -14,13 +13,12 @@ export class GetPostsService {
   }
 
   getPosts<T>(searchTerms: SearchTerms, page: number) {
+    console.log(page);
     return this.http.get(
       `https://konachan.com/post.xml?limit=${searchTerms.pageSize}&page=${page}&tags=${searchTerms.getRatingString}+${searchTerms.tags}`,
       {responseType: 'text'})
-      .retry(5)
-      .switchMap(x => {
-        return this.parser.ParseXml<T>(x);
-      });
+      .map(x => this.parser.ParseXml(x))
+      .toPromise();
   }
 }
 
