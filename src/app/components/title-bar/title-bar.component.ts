@@ -13,8 +13,6 @@ export class TitleBarComponent implements OnInit {
   winSize: number[];
   winPos: number[];
 
-  windowSettings: IWindowSettings;
-
   constructor(private electron: ElectronService) {
 
   }
