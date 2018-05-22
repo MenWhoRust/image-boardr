@@ -14,8 +14,10 @@ export class GetPostsService {
 
   getPosts<T>(searchTerms: SearchTerms, page: number) {
     console.log(page);
+    const firstReplace = searchTerms.tags.replace(' ', '+');
+    const safeString = firstReplace.replace('&', '%26');
     return this.http.get(
-      `https://konachan.com/post.xml?limit=${searchTerms.pageSize}&page=${page}&tags=${searchTerms.getRatingString}+${searchTerms.tags}`,
+      `https://konachan.com/post.xml?limit=${searchTerms.pageSize}&page=${page}&tags=${searchTerms.getRatingString}+${safeString}`,
       {responseType: 'text'})
       .map(x => this.parser.ParseXml(x))
       .toPromise();
