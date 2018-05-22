@@ -32,6 +32,12 @@ export class SearchBarComponent implements OnInit {
     this.pageSize = this.searchTerms.pageSize;
   }
 
+  checkKeyPress(event) {
+    if (event.keyCode === 13) {
+      this.submitSearch();
+    }
+  }
+
   submitSearch() {
     this.ratingChange.emit(new SearchTerms(this.tags, this.pageSize, this.isSafe, this.isQuestionable, this.isExplicit));
   }

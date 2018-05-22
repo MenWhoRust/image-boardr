@@ -11,7 +11,7 @@
             [ngStyle]="{'background-color': isExplicit ? '#BF0000' : '#343a40', 'color': isExplicit ? '#343a40' : '#BF0000'}"
             (click)="isExplicit = !isExplicit">Explicit
     </button>
-  <input class="input-group-text form-control mx-1" [(ngModel)]="tags" type="text" title="Search Terms" placeholder="Tags...">
+  <input class="input-group-text form-control mx-1" [(ngModel)]="tags" type="text" title="Search Terms" (keypress)="checkKeyPress($event)" placeholder="Tags...">
   <select class="mx-1 form-control" [(ngModel)]="pageSize" title="Number of Images">
     <option value="25">25</option>
     <option value="50">50</option>
