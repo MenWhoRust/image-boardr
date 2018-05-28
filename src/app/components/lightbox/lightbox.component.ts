@@ -66,4 +66,10 @@ export class LightboxComponent implements OnInit {
   closeModal() {
     this.active = false;
   }
+
+  isEscape(event) {
+    if (event.keyCode === 27) {
+      this.closeModal();
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <div [@lightboxAnimate]="active" (@lightboxAnimate.done)="handleState($event)"
-     (@lightboxAnimate.start)="handleState($event)" id="modal" class="modal container-fluid p-0">
+     (@lightboxAnimate.start)="handleState($event)" id="modal" class="modal container-fluid p-0" (keydown)="isEscape($event)">
   <div class="action-button-absolute d-flex action-button-color text-dark" (click)="closeModal()">
     <i class="fas fa-times"></i>
   </div>
