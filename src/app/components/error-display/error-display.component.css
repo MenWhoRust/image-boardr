@@ -1,0 +1,7 @@
+.error-display {
+  margin-bottom: 10%;
+  padding: 20px;
+  background-color: white;
+  border: black solid 3px;
+  border-radius: 15px;
+}
