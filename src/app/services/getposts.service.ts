@@ -19,7 +19,7 @@ export class GetPostsService {
     return this.http.get(
       `https://konachan.com/post.xml?limit=${searchTerms.pageSize}&page=${page}&tags=${searchTerms.getRatingString}+${safeString}`,
       {responseType: 'text'})
-      .map(x => this.parser.ParseXml(x))
+      .map(x => this.parser.ParseXml<T>(x))
       .toPromise();
   }
 }
