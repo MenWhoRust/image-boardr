@@ -12,7 +12,7 @@ export class SearchBarComponent implements OnInit {
   searchTerms: SearchTerms;
 
   @Output()
-  ratingChange = new EventEmitter<SearchTerms>();
+  searchTermsChange = new EventEmitter<SearchTerms>();
 
   isSafe: boolean;
   isQuestionable: boolean;
@@ -39,6 +39,6 @@ export class SearchBarComponent implements OnInit {
   }
 
   submitSearch() {
-    this.ratingChange.emit(new SearchTerms(this.tags, this.pageSize, this.isSafe, this.isQuestionable, this.isExplicit));
+    this.searchTermsChange.emit(new SearchTerms(this.tags, this.pageSize, this.isSafe, this.isQuestionable, this.isExplicit));
   }
 }

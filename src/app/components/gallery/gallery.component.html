@@ -1,5 +1,5 @@
 <div class="container-fluid d-flex flex-column gallery bg-light p-0">
-  <app-search-bar [searchTerms]="searchTerms" (ratingChange)="setSearchTerms($event)"></app-search-bar>
+  <app-search-bar [searchTerms]="searchTerms" (searchTermsChange)="setSearchTerms($event)"></app-search-bar>
   <div #flexGallery class="container-fluid flex-gallery" [ngClass]="isInErrorState ? 'align-items-center justify-content-center' : ''">
     <div *ngIf="!isLoaded" class="loader flex-loader"></div>
     <app-error-display *ngIf="isInErrorState" [errorMessage]="errorMessage"></app-error-display>
