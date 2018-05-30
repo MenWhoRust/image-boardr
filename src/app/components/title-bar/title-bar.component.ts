@@ -18,8 +18,6 @@ export class TitleBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.winSize = this.electron.remote.getCurrentWindow().getSize();
-    this.winPos = this.electron.remote.getCurrentWindow().getPosition();
   }
 
   Minimise() {
