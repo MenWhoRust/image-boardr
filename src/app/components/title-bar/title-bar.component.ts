@@ -24,6 +24,7 @@ export class TitleBarComponent implements OnInit {
     this.electron.remote.getCurrentWindow().minimize();
   }
 
+  // Makes sure window position and size are saved when minimising and restoring
   Maximise() {
     if (!this.electron.remote.getCurrentWindow().isMaximized()) {
       this.winSize = this.electron.remote.getCurrentWindow().getSize();

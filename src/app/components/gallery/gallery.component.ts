@@ -27,31 +27,48 @@ import {IErrorMessage} from '../../types/IErrorMessage';
 
 })
 export class GalleryComponent implements OnInit {
+  // Get a reference to the gallery container
   @ViewChild('galleryContainer', {read: ViewContainerRef})
   container: ViewContainerRef;
 
+  // Reference to the flexGallery element
   @ViewChild('flexGallery')
   panel: ElementRef;
 
+  // Holds information about the current posts, page, page size,
+  // total items and search terms
+  ///////////////////////////////////////////////
   posts: Post[] = [];
   page = 1;
   pageSize = 50;
   searchTerms: SearchTerms;
+  totalItems: number;
+  //////////////////////////////////////////////
 
+  // Application State variables
+  // TODO: Migrate state management to Redux?
+  /////////////////////////
   isLoaded = false;
   isFetching: boolean;
   isInErrorState = false;
+  ////////////////////////
 
-  totalItems: number;
+  // Masonry grid display for posts
   private _masonry: Masonry;
 
+  // Error Message variable
   errorMessage: IErrorMessage;
 
 
+  // Create a reference to the GetPostsService
+  // Initializes default SearchTerms object
+  // TODO: Load the previous session's search terms
   constructor(private getPosts: GetPostsService) {
     this.searchTerms = new SearchTerms('', this.pageSize, true, false, false);
   }
 
+  // Load default posts
+  // TODO: Might be better to leave it blank on first launch and display a message
   ngOnInit() {
     this.goToPage(this.page);
   }
@@ -74,12 +91,13 @@ export class GalleryComponent implements OnInit {
 
     // Remove all previous items from the masonry grid
     this.removeAllItems();
-    this.getPosts.getPosts(this.searchTerms, page).then(
+    // TODO: Need to make the returned type depend on what image board is selected
+    this.getPosts.getPosts<Konachan>(this.searchTerms, page).then(
       response => {
         console.log(response);
 
         // If there are no posts matching a query the api doesn't return an empty response
-        // So I needed to handle when the posts count is 0
+        // So I need to handle when the posts count is 0
         if (Number(response.posts.count) === 0) {
           this.isInErrorState = true;
           this.isLoaded = true;
@@ -91,6 +109,8 @@ export class GalleryComponent implements OnInit {
           return;
         }
 
+        // Adding items to the masonry grid
+        // Put it in a Timeout to make sure animations do not clash
         setTimeout(() => {
           this.pageSize = this.searchTerms.pageSize;
           this.totalItems = response.posts.count;
@@ -110,6 +130,8 @@ export class GalleryComponent implements OnInit {
         }, 600);
 
       }, (error: Response) => {
+        // Error Handling
+        // TODO: Need to implement error handling for other common scenarios
         if (error.status === 0) {
           this.removeAllItems();
           setTimeout(() => {
@@ -126,25 +148,32 @@ export class GalleryComponent implements OnInit {
       });
   }
 
+  // Sends a request will the search terms received from
+  // the search bar component
   setSearchTerms(searchTerms: SearchTerms) {
     this.searchTerms = searchTerms;
     this.goToPage(1);
   }
 
+  // When the Masonry grid finishes init
+  // assign the events value to the _masonry variable
   onNgMasonryInit($event: Masonry) {
     this._masonry = $event;
   }
 
+  // Removes all items from the masonry grid
   removeAllItems() {
     if (this._masonry) {
       this._masonry.removeAllItems()
         .subscribe((items: MasonryGridItem) => {
+          // TODO: See what is in items
           this.isLoaded = false;
           this.posts = [];
         });
     }
   }
 
+  // Adds items to the masonry grid
   addItems(items) {
     if (this._masonry) {
       this._masonry.setAddStatus('add');

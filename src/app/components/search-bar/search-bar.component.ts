@@ -11,6 +11,7 @@ export class SearchBarComponent implements OnInit {
   @Input()
   searchTerms: SearchTerms;
 
+  // Fires when the user submits new search terms
   @Output()
   searchTermsChange = new EventEmitter<SearchTerms>();
 
@@ -24,6 +25,7 @@ export class SearchBarComponent implements OnInit {
 
   }
 
+  // Initialises the search bar with default terms from the parent
   ngOnInit() {
     this.isSafe = this.searchTerms.isSafe;
     this.isQuestionable = this.searchTerms.isQuestionable;
@@ -32,6 +34,7 @@ export class SearchBarComponent implements OnInit {
     this.pageSize = this.searchTerms.pageSize;
   }
 
+  // Submits a search when enter is pressed
   checkKeyPress(event) {
     if (event.keyCode === 13) {
       this.submitSearch();

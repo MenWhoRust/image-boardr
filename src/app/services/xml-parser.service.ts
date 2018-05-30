@@ -7,6 +7,7 @@ export class XmlParserService {
   constructor() {
   }
 
+  // Parses XML receive from apis
   ParseXml<T>(xml: string) {
     let xmlResult;
       parseString(xml, {mergeAttrs: true, explicitArray: false}, (err, result: T) => {

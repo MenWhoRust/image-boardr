@@ -25,13 +25,15 @@ import {LightboxComponent} from '../lightbox/lightbox.component';
     ])
   ]
 })
+// TODO: Need to move some elements and logic to enable lightbox navigation
+// TODO: Maybe highlight the current image selected in the lightbox; can use an index for this
 export class GalleryImageComponent implements OnInit {
 
   @Input()
   post: Post;
 
   @Input()
-    container: ViewContainerRef;
+  container: ViewContainerRef;
 
   isHovered = false;
   isLoaded = false;
@@ -42,10 +44,12 @@ export class GalleryImageComponent implements OnInit {
   ngOnInit() {
   }
 
+  // TODO: Need to move the download button to the parent
   download(fileUrl) {
     this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
   }
 
+  // TODO: Need to move lightbox creation to the parent component otherwise
   createLightbox(fileUrl: string, tags: string) {
     this.container.clear();
 

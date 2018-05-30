@@ -8,6 +8,7 @@ import {IErrorMessage} from '../../types/IErrorMessage';
 })
 export class ErrorDisplayComponent implements OnInit {
 
+  // Holds the error message
   @Input()
   errorMessage: IErrorMessage;
 

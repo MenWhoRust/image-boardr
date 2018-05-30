@@ -12,6 +12,9 @@ export class GetPostsService {
   constructor(private  http: HttpClient, private parser: XmlParserService) {
   }
 
+  // Generic get posts method
+  // TODO: need to check what type is passed and change the url appropriately for other image boards
+  // TODO: Some apis do not return XML, need a workaround
   getPosts<T>(searchTerms: SearchTerms, page: number) {
     console.log(page);
     const firstReplace = searchTerms.tags.replace(' ', '+');

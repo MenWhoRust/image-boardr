@@ -25,6 +25,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ])
   ]
 })
+
+// TODO: Need to pass the entire posts object to the lightbox rather than a single image to enable navigation
 export class LightboxComponent implements OnInit {
 
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
