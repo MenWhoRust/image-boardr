@@ -166,7 +166,6 @@ export class GalleryComponent implements OnInit {
     if (this._masonry) {
       this._masonry.removeAllItems()
         .subscribe((items: MasonryGridItem) => {
-          // TODO: See what is in items
           this.isLoaded = false;
           this.posts = [];
         });
