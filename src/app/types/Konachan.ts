@@ -1,4 +1,3 @@
-// TODO: Change to class
 export class Konachan {
   posts: Posts;
 }
