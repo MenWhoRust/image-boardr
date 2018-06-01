@@ -3,14 +3,20 @@
   <div class="action-button-absolute d-flex action-button-color text-dark" (click)="closeModal()">
     <i class="fas fa-times"></i>
   </div>
-  <div class="modal-content">
+  <div class="lightbox-content">
     <div *ngIf="!isLoaded " class="loader"></div>
     <img [@imageFade]="isLoaded" class="div-img" src="{{posts[index].file_url}}"
          (load)="loaded();">
   </div>
   <div class="caption-container">
     <div class="row justify-content-center">
+      <div class="action-button-relative action-button-color text-dark" (click)="previousPost()">
+        <i class="fas fa-download"></i>
+      </div>
       <div class="action-button-relative action-button-color text-dark" (click)="download(posts[index].file_url)">
+        <i class="fas fa-download"></i>
+      </div>
+      <div class="action-button-relative action-button-color text-dark" (click)="nextPost()">
         <i class="fas fa-download"></i>
       </div>
     </div>

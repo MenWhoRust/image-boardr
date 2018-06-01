@@ -27,7 +27,9 @@ import {Post} from '../../types/Konachan';
   ]
 })
 
-// TODO: Need to pass the entire posts object to the lightbox rather than a single image to enable navigation
+// TODO: Need to animate the image swiping to the left or right before it fades away and isLoaded is set to false
+// TODO: Animate the tags leaving as well
+// TODO: Proper navigation buttons
 export class LightboxComponent implements OnInit {
 
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
@@ -60,7 +62,6 @@ export class LightboxComponent implements OnInit {
 
   loaded() {
     this.isLoaded = !this.isLoaded;
-    console.log(this.posts);
   }
 
   download(fileUrl) {
@@ -74,6 +75,24 @@ export class LightboxComponent implements OnInit {
   isEscape(event) {
     if (event.keyCode === 27) {
       this.closeModal();
+    }
+  }
+
+  previousPost() {
+    this.isLoaded = false;
+    if (this.index === 0) {
+      this.index = this.posts.length - 1;
+    } else {
+      this.index--;
+    }
+  }
+
+  nextPost() {
+    this.isLoaded = false;
+    if (this.index === this.posts.length - 1) {
+      this.index = 0;
+    } else {
+      this.index++;
     }
   }
 }
