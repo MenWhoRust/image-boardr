@@ -5,16 +5,16 @@
   </div>
   <div class="modal-content">
     <div *ngIf="!isLoaded " class="loader"></div>
-    <img [@imageFade]="isLoaded" class="div-img" src="{{fileUrl}}"
+    <img [@imageFade]="isLoaded" class="div-img" src="{{posts[index].file_url}}"
          (load)="loaded();">
   </div>
   <div class="caption-container">
     <div class="row justify-content-center">
-      <div class="action-button-relative action-button-color text-dark" (click)="download(fileUrl)">
+      <div class="action-button-relative action-button-color text-dark" (click)="download(posts[index].file_url)">
         <i class="fas fa-download"></i>
       </div>
     </div>
     <p id="caption"><span class="btn btn-pill action-button-color text-light m-1"
-                          *ngFor="let tag of tags">{{tag}}</span></p>
+                          *ngFor="let tag of posts[index].tags.split(' ')">{{tag}}</span></p>
   </div>
 </div>

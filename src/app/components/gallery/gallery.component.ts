@@ -180,4 +180,10 @@ export class GalleryComponent implements OnInit {
       this.posts = items;
     }
   }
+
+  // Set the lightbox posts variable so that it is only set when a lightbox is created
+  // Instead of having each gallery-image component contain its own copy of posts
+  setLightboxVariables(event: ComponentRef<LightboxComponent>) {
+    event.instance.posts = this.posts;
+  }
 }

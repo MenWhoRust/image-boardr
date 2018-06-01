@@ -1,4 +1,13 @@
-import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {
+  Component,
+  ComponentFactory,
+  ComponentFactoryResolver,
+  ComponentRef,
+  EventEmitter,
+  Input,
+  OnInit, Output,
+  ViewContainerRef
+} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {Post} from '../../types/Konachan';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -25,12 +34,16 @@ import {LightboxComponent} from '../lightbox/lightbox.component';
     ])
   ]
 })
-// TODO: Need to move some elements and logic to enable lightbox navigation
 // TODO: Maybe highlight the current image selected in the lightbox; can use an index for this
 export class GalleryImageComponent implements OnInit {
 
+  @Output() lightBoxCreated: EventEmitter<ComponentRef<LightboxComponent>> = new EventEmitter<ComponentRef<LightboxComponent>>();
+
   @Input()
   post: Post;
+
+  @Input()
+  postIndex: number;
 
   @Input()
   container: ViewContainerRef;
@@ -44,20 +57,21 @@ export class GalleryImageComponent implements OnInit {
   ngOnInit() {
   }
 
-  // TODO: Need to move the download button to the parent
   download(fileUrl) {
     this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
   }
 
-  // TODO: Need to move lightbox creation to the parent component otherwise
-  createLightbox(fileUrl: string, tags: string) {
+  createLightbox() {
     this.container.clear();
 
     const factory: ComponentFactory<LightboxComponent> = this.resolver.resolveComponentFactory(LightboxComponent);
     const component: ComponentRef<LightboxComponent> = this.container.createComponent(factory);
 
-    component.instance.fileUrl = fileUrl;
-    component.instance.tags = tags.split(' ');
+    // Tell the parent that the lightbox has been created
+    this.lightBoxCreated.emit(component);
+
+    // Pass the image's index to the lightbox that hopefully has a defined posts variable
+    component.instance.index = this.postIndex;
     component.instance.destroyCheck
       .subscribe(v => {
         if (v === 'kill me') {

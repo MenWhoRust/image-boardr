@@ -10,9 +10,10 @@
         [useAnimation]="true"
         class="pt-2">
         <ng-masonry-grid-item
-          *ngFor="let post of posts | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}"
+          *ngFor="let post of posts | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}; let x = index"
           @animateImages>
-          <app-gallery-image [container]="container" [post]="post"></app-gallery-image>
+          <!-- Pass an index reference to the gallery-image-->
+          <app-gallery-image [container]="container" [post]="post" [postIndex]="x" (lightBoxCreated)="setLightboxVariables($event)"></app-gallery-image>
         </ng-masonry-grid-item>
       </ng-masonry-grid>
     </div>

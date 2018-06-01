@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Post} from '../../types/Konachan';
 
 @Component({
   selector: 'app-lightbox',
@@ -32,10 +33,10 @@ export class LightboxComponent implements OnInit {
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
-  fileUrl: string;
+  index: number;
 
   @Input()
-  tags: string[];
+  posts: Post[];
 
   isLoaded = false;
 
@@ -59,6 +60,7 @@ export class LightboxComponent implements OnInit {
 
   loaded() {
     this.isLoaded = !this.isLoaded;
+    console.log(this.posts);
   }
 
   download(fileUrl) {
