@@ -1,6 +1,6 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnInit, ViewContainerRef} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
-import {Post} from '../../types/IKonachan';
+import {Post} from '../../types/Konachan';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {LightboxComponent} from '../lightbox/lightbox.component';
 

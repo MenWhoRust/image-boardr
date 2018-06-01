@@ -1,14 +1,15 @@
-export interface Konachan {
+// TODO: Change to class
+export class Konachan {
   posts: Posts;
 }
 
-export interface Posts {
+export class Posts {
   count: number;
   offset: number;
   post: Post[];
 }
 
-export interface Post {
+export class Post {
   actual_preview_height: string;
   actual_preview_width: string;
   author: string;
