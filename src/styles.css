@@ -6,6 +6,11 @@ html, body {
   overflow: hidden;
 }
 
+.noselect {
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
 app-gallery {
   display: flex;
   flex-flow: column;
