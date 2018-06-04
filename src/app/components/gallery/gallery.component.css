@@ -19,11 +19,6 @@
   min-height: 100vh;
 }
 
-.image-div {
-  min-height: 200px;
-  min-width: 300px;
-}
-
 app-lightbox {
   cursor: pointer;
 }
