@@ -28,8 +28,8 @@ import {Post} from '../../types/Konachan';
 })
 
 // TODO: Need to animate the image swiping to the left or right before it fades away and isLoaded is set to false
-// TODO: Animate the tags leaving as well
 // TODO: Navigation buttons inside image eg: https://www.w3schools.com/howto/howto_js_lightbox.asp
+// TODO: Fix lightbox fadein/fadeout animation
 export class LightboxComponent implements OnInit {
 
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
