@@ -8,74 +8,94 @@
     <div *ngIf="!isLoaded " class="loader"></div>
     <img [@imageFade]="isLoaded" class="div-img" src="{{posts[index].file_url}}"
          (load)="loaded();">
-    <div class="d-flex position-absolute align-self-end">
-      <div class="prev-btn" (click)="previousPost()">
+    <div class="d-flex position-absolute align-self-end pb-2">
+      <div class="prev-btn" (click)="changePost('back')">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
-             viewBox="0 0 640 640" width="50" height="50">
+             viewBox="0 0 50 50" width="50" height="50">
           <defs>
-            <clipPath id="_clipPath_ODZQkXwxL5OJOIVaV3LQ0ArIloSqYSTP">
-              <rect width="640" height="640"/>
+            <clipPath id="_clipPath_FWWq4VDsWp4kNWeZFQ7qgOrppKT39T1r">
+              <rect width="50" height="50"/>
             </clipPath>
           </defs>
-          <g clip-path="url(#_clipPath_ODZQkXwxL5OJOIVaV3LQ0ArIloSqYSTP)">
-            <g id="Group">
+          <g clip-path="url(#_clipPath_FWWq4VDsWp4kNWeZFQ7qgOrppKT39T1r)">
+            <clipPath id="_clipPath_4LQR5JqXMT2Vj7wKHH82zWJy6PKPCAFN">
+              <rect x="0" y="0" width="50" height="50" transform="matrix(1,0,0,1,0,0)" fill="rgb(255,255,255)"/>
+            </clipPath>
+            <g clip-path="url(#_clipPath_4LQR5JqXMT2Vj7wKHH82zWJy6PKPCAFN)">
               <g id="Group">
-                <path
-                  d=" M 265.271 320 L 428.723 483.452 C 438.48 493.209 439.455 508.075 430.901 516.63 L 430.901 516.63 C 422.346 525.185 407.48 524.209 397.723 514.452 L 203.271 320 L 397.723 125.548 C 407.48 115.791 422.346 114.815 430.901 123.37 L 430.901 123.37 C 439.455 131.925 438.48 146.791 428.723 156.548 L 265.271 320 Z "
-                  fill="rgb(0,0,0)"/>
+                <g id="Group">
+                  <g id="Group">
+                    <path
+                      d=" M 20.724 25 L 33.494 37.77 C 34.256 38.532 34.332 39.693 33.664 40.362 L 33.664 40.362 C 32.996 41.03 31.834 40.954 31.072 40.192 L 15.881 25 L 31.072 9.808 C 31.834 9.046 32.996 8.97 33.664 9.638 L 33.664 9.638 C 34.332 10.307 34.256 11.468 33.494 12.23 L 20.724 25 Z "
+                      fill="rgb(0,0,0)"/>
+                  </g>
+                </g>
               </g>
             </g>
           </g>
         </svg>
       </div>
-      <div class="info-btn">
+      <div #infoBtn class="info-btn">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
-             viewBox="0 0 640 640" width="50" height="50">
+             viewBox="0 0 50 50" width="50" height="50">
           <defs>
-            <clipPath id="_clipPath_6phQ85rZtTELp4bVaquMPjG9t9W2mjlI">
-              <rect width="640" height="640"/>
+            <clipPath id="_clipPath_dQ5Brv4EXosr44K4u8Ly9lYdZuX6SdnY">
+              <rect width="50" height="50"/>
             </clipPath>
           </defs>
-          <g clip-path="url(#_clipPath_6phQ85rZtTELp4bVaquMPjG9t9W2mjlI)">
-            <g transform="matrix(1,0,0,1,235,159)">
-              <text transform="matrix(1,0,0,1,57.75,225)"
-                    style="font-family:&quot;Bree Serif&quot;;font-weight:400;font-size:350px;font-style:normal;fill:#000000;stroke:none;">
-                i
-              </text>
+          <g clip-path="url(#_clipPath_dQ5Brv4EXosr44K4u8Ly9lYdZuX6SdnY)">
+            <clipPath id="_clipPath_iMOm7xGpNQ5uaHNq4EK72wzJQJX7NJyP">
+              <rect x="0" y="0" width="50" height="50" transform="matrix(1,0,0,1,0,0)" fill="rgb(255,255,255)"/>
+            </clipPath>
+            <g clip-path="url(#_clipPath_iMOm7xGpNQ5uaHNq4EK72wzJQJX7NJyP)">
+              <g id="Group">
+                <g id="Group">
+                  <g transform="matrix(0.078,0,0,0.078,22.871,8.965)">
+                    <text transform="matrix(1,0,0,1,0,269.25)"
+                          style="font-family:&quot;Bree Serif&quot;;font-weight:400;font-size:350px;font-style:normal;fill:#000000;stroke:none;">
+                      i
+                    </text>
+                  </g>
+                </g>
+              </g>
             </g>
           </g>
         </svg>
       </div>
-      <div class="next-btn" (click)="nextPost()">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
-             viewBox="0 0 640 640" width="50" height="50">
+      <div class="next-btn" (click)="changePost('forward')">
+       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+             viewBox="0 0 50 50" width="50" height="50">
           <defs>
-            <clipPath id="_clipPath_1j5Dz0I0ebribadMzwgAIvQAOpnGVKC1">
-              <rect width="640" height="640"/>
+            <clipPath id="_clipPath_m4QAx8karR7SQTGoQN0lnZZyO60cWtEW">
+              <rect width="50" height="50"/>
             </clipPath>
           </defs>
-          <g clip-path="url(#_clipPath_1j5Dz0I0ebribadMzwgAIvQAOpnGVKC1)">
-            <g id="Group">
+          <g clip-path="url(#_clipPath_m4QAx8karR7SQTGoQN0lnZZyO60cWtEW)">
+            <clipPath id="_clipPath_StPmuCBWALYKXF7BShWjCAynRAGWFGH9">
+              <rect x="0" y="0" width="50" height="50" transform="matrix(1,0,0,1,0,0)" fill="rgb(255,255,255)"/>
+            </clipPath>
+            <g clip-path="url(#_clipPath_StPmuCBWALYKXF7BShWjCAynRAGWFGH9)">
               <g id="Group">
-                <path
-                  d=" M 374.729 320 L 211.277 483.452 C 201.52 493.209 200.545 508.075 209.099 516.63 L 209.099 516.63 C 217.654 525.185 232.52 524.209 242.277 514.452 L 436.729 320 L 242.277 125.548 C 232.52 115.791 217.654 114.815 209.099 123.37 L 209.099 123.37 C 200.545 131.925 201.52 146.791 211.277 156.548 L 374.729 320 Z "
-                  fill="rgb(0,0,0)"/>
+                <g id="Group">
+                  <g id="Group">
+                    <path
+                      d=" M 29.276 25 L 16.506 37.77 C 15.744 38.532 15.668 39.693 16.336 40.362 L 16.336 40.362 C 17.004 41.03 18.166 40.954 18.928 40.192 L 34.119 25 L 18.928 9.808 C 18.166 9.046 17.004 8.97 16.336 9.638 L 16.336 9.638 C 15.668 10.307 15.744 11.468 16.506 12.23 L 29.276 25 Z "
+                      fill="rgb(0,0,0)"/>
+                  </g>
+                </g>
               </g>
             </g>
           </g>
         </svg>
       </div>
     </div>
-
-
-    <div class="caption-container">
+    <div class="tags-container" [@infoOpen]="isInfoOpen" ClickOutside (clickOutside)="toggleInfo($event)">
       <div class="row justify-content-center">
         <div class="action-button-relative action-button-color text-dark" (click)="download(posts[index].file_url)">
           <i class="fas fa-download"></i>
         </div>
-
       </div>
-      <p><span class="btn btn-pill action-button-color text-light m-1"
+      <p><span class="btn btn-pill action-button-color text-light m-1 tag"
                *ngFor="let tag of posts[index].tags.split(' ')">{{tag}}</span></p>
     </div>
   </div>

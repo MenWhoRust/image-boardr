@@ -28,8 +28,8 @@
   height: 20px;
 }
 
-.caption-container {
-  overflow: auto;
+.tags-container {
+  overflow: hidden;
   left: 0;
   height: 100%;
   width: 0;
@@ -50,7 +50,7 @@
   justify-content: center;
  }
 
-.prev-btn:hover, .next-btn:hover {
+.prev-btn:hover, .next-btn:hover, .info-btn:hover {
   background-color: rgba(169,169,169, .5);
 }
 
@@ -62,13 +62,6 @@
 .next-btn {
   border-bottom-right-radius: 50%;
   border-top-right-radius: 50%;
-}
-
-.btn-content {
-  flex: 1;
-  height: 100%;
-  align-items: center;
-  display: flex;
 }
 
 

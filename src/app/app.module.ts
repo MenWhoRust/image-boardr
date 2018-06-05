@@ -17,6 +17,7 @@ import {GalleryImageComponent} from './components/gallery-image/gallery-image.co
 import {CheckRatingService} from './services/check-rating.service';
 import {FormsModule} from '@angular/forms';
 import { ErrorDisplayComponent } from './components/error-display/error-display.component';
+import { ClickOutsideDirective } from './Directives/click-outside.directive';
 
 
 
@@ -29,7 +30,8 @@ import { ErrorDisplayComponent } from './components/error-display/error-display.
     GalleryComponent,
     LightboxComponent,
     GalleryImageComponent,
-    ErrorDisplayComponent
+    ErrorDisplayComponent,
+    ClickOutsideDirective
 
   ],
   imports: [

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Post} from '../../types/Konachan';
@@ -19,9 +19,14 @@ import {Post} from '../../types/Konachan';
     ]),
     trigger('imageFade', [
       state('false', style({opacity: 0})),
-      state('true', style({opacity: 1})),
       transition('false <=> true', [
         animate(500)
+      ])
+    ]),
+    trigger('infoOpen', [
+      state('true', style({width: '25%'})),
+      transition('false <=> true', [
+        animate(250)
       ])
     ])
   ]
@@ -32,6 +37,10 @@ import {Post} from '../../types/Konachan';
 // TODO: Fix lightbox fadein/fadeout animation
 export class LightboxComponent implements OnInit {
 
+  @ViewChild('infoBtn')
+  infoBtn: ElementRef;
+
+
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
@@ -41,6 +50,8 @@ export class LightboxComponent implements OnInit {
   posts: Post[];
 
   isLoaded = false;
+  isInfoOpen = false;
+  isAnimating = false;
 
   active = false;
 
@@ -58,6 +69,7 @@ export class LightboxComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.infoBtn.nativeElement);
   }
 
   loaded() {
@@ -66,6 +78,15 @@ export class LightboxComponent implements OnInit {
 
   download(fileUrl) {
     this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
+  }
+
+  toggleInfo(event) {
+    console.log(this.infoBtn);
+    if (this.infoBtn.nativeElement.contains(event.target)) {
+      this.isInfoOpen = !this.isInfoOpen;
+    } else {
+      this.isInfoOpen = false;
+    }
   }
 
   closeModal() {
@@ -78,21 +99,37 @@ export class LightboxComponent implements OnInit {
     }
   }
 
-  previousPost() {
-    this.isLoaded = false;
-    if (this.index === 0) {
-      this.index = this.posts.length - 1;
-    } else {
-      this.index--;
+  changePost(direction: string) {
+    if (this.isAnimating) {
+      return;
     }
-  }
 
-  nextPost() {
-    this.isLoaded = false;
-    if (this.index === this.posts.length - 1) {
-      this.index = 0;
-    } else {
-      this.index++;
+    if (this.isLoaded) {
+      this.loaded();
     }
+    this.isAnimating = true;
+
+    setTimeout(() => {
+      switch (direction) {
+        case 'back': {
+          if
+          (this.index === 0) {
+            this.index = this.posts.length - 1;
+          } else {
+            this.index--;
+          }
+          break;
+        }
+        case 'forward': {
+          if (this.index === this.posts.length - 1) {
+            this.index = 0;
+          } else {
+            this.index++;
+          }
+          break;
+        }
+      }
+      this.isAnimating = false;
+    }, 500);
   }
 }
