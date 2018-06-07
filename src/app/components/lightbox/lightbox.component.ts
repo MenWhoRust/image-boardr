@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -32,9 +33,6 @@ import {Post} from '../../types/Konachan';
   ]
 })
 
-// TODO: Need to animate the image swiping to the left or right before it fades away and isLoaded is set to false
-// TODO: Navigation buttons inside image eg: https://www.w3schools.com/howto/howto_js_lightbox.asp
-// TODO: Fix lightbox fadein/fadeout animation
 export class LightboxComponent implements OnInit {
 
   @ViewChild('infoBtn')
@@ -42,7 +40,7 @@ export class LightboxComponent implements OnInit {
 
 
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
-
+  
   @Input()
   index: number;
 
@@ -51,7 +49,6 @@ export class LightboxComponent implements OnInit {
 
   isLoaded = false;
   isInfoOpen = false;
-  isAnimating = false;
 
   active = false;
 
@@ -100,16 +97,9 @@ export class LightboxComponent implements OnInit {
   }
 
   changePost(direction: string) {
-    if (this.isAnimating) {
-      return;
-    }
-
-    if (this.isLoaded) {
-      this.loaded();
-    }
-    this.isAnimating = true;
-
-    setTimeout(() => {
+    this.isLoaded = false;
+    const debounce = _.debounce(() => {
+      console.log('bounce');
       switch (direction) {
         case 'back': {
           if
@@ -129,7 +119,8 @@ export class LightboxComponent implements OnInit {
           break;
         }
       }
-      this.isAnimating = false;
     }, 500);
+
+    debounce();
   }
 }
