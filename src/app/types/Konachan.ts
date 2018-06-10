@@ -13,7 +13,7 @@ export class Post {
   actual_preview_width: string;
   author: string;
   change: string;
-  created_at: string;
+  created_at: number;
   creator_id: string;
   file_size: string;
   file_url: string;

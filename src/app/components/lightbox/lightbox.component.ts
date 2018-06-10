@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Post} from '../../types/Konachan';
@@ -25,7 +25,13 @@ import {Post} from '../../types/Konachan';
       ])
     ]),
     trigger('infoOpen', [
-      state('true', style({width: '25%'})),
+      state('true', style({width: '30%'})),
+      transition('false <=> true', [
+        animate(500)
+      ])
+    ]),
+    trigger('infoAnim', [
+      state('false', style({opacity: 0})),
       transition('false <=> true', [
         animate(250)
       ])
@@ -40,7 +46,7 @@ export class LightboxComponent implements OnInit {
 
 
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
-  
+
   @Input()
   index: number;
 
@@ -49,16 +55,32 @@ export class LightboxComponent implements OnInit {
 
   isLoaded = false;
   isInfoOpen = false;
+  infoTagAnimTrigger = false;
 
   active = false;
 
   handleState(event) {
-    if (event.fromState === 'void' && event.phaseName === 'done') {
-      this.active = true;
-    }
+    switch (event.triggerName) {
+      case 'lightboxAnimate':
+        if (event.fromState === 'void' && event.phaseName === 'done') {
+          this.active = true;
+        }
 
-    if (event.fromState === true && event.toState === false && event.phaseName === 'done') {
-      this.destroyCheck.emit('kill me');
+        if (event.fromState === true && event.toState === false && event.phaseName === 'done') {
+          this.destroyCheck.emit('kill me');
+        }
+        break;
+
+      case 'infoOpen':
+        console.log(event);
+        if (event.fromState === false && event.phaseName === 'done' && event.toState === true) {
+          this.infoTagAnimTrigger = true;
+        }
+        if (event.fromState === true && event.phaseName === 'start' && event.toState === false) {
+          this.infoTagAnimTrigger = false;
+        }
+        break;
+
     }
   }
 
@@ -66,7 +88,6 @@ export class LightboxComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.infoBtn.nativeElement);
   }
 
   loaded() {
@@ -78,7 +99,6 @@ export class LightboxComponent implements OnInit {
   }
 
   toggleInfo(event) {
-    console.log(this.infoBtn);
     if (this.infoBtn.nativeElement.contains(event.target)) {
       this.isInfoOpen = !this.isInfoOpen;
     } else {
@@ -122,5 +142,9 @@ export class LightboxComponent implements OnInit {
     }, 500);
 
     debounce();
+  }
+
+  openConfirmMessage(source) {
+    // TODO: Implement this
   }
 }
