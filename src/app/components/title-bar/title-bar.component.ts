@@ -14,6 +14,8 @@ export class TitleBarComponent implements OnInit {
   winPos: number[];
 
   constructor(private electron: ElectronService) {
+    this.winSize = [500, 500];
+    this.winPos = [0, 0];
 
   }
 
@@ -26,17 +28,10 @@ export class TitleBarComponent implements OnInit {
 
   // Makes sure window position and size are saved when minimising and restoring
   Maximise() {
-    if (!this.electron.remote.getCurrentWindow().isMaximized()) {
-      this.winSize = this.electron.remote.getCurrentWindow().getSize();
-      this.winPos = this.electron.remote.getCurrentWindow().getPosition();
-      this.electron.remote.getCurrentWindow().maximize();
-    } else {
-      this.electron.remote.getCurrentWindow().setPosition(this.winPos[0], this.winPos[1], true);
-      this.electron.remote.getCurrentWindow().setSize(this.winSize[0], this.winSize[1], true);
-    }
+    this.electron.ipcRenderer.send('MaximiseMe');
   }
 
   Exit() {
-    this.electron.ipcRenderer.send('quit');
+    this.electron.ipcRenderer.send('quit', {winPos: this.winPos, winSize: this.winSize});
   }
 }

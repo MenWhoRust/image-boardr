@@ -1,35 +1,37 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const {download} = require('electron-dl');
 const Store = require('electron-store');
+const windowStateKeeper = require('electron-window-state');
+
 const store = new Store();
 
 let win;
+let mainWindowState;
 
 function createWindow() {
   win = new BrowserWindow({
+    backgroundColor: '#222222',
     minHeight: 500,
     minWidth: 500,
-    width: store.get('winWidth', 800),
-    height: store.get('winHeight', 600),
+    'x': mainWindowState.x,
+    'y': mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     frame: false,
     show: false
   });
   win.loadURL(`file://${__dirname}/dist/index.html`);
-  win.setPosition(store.get('winXPos',400), store.get('winYPos',0));
-  store.get('isMaximised') ? win.maximize() : win.restore();
 }
 
 app.on('ready', () => {
+  mainWindowState = windowStateKeeper({
+    defaultWidth: 500,
+    defaultHeight: 500
+  });
   createWindow();
+  mainWindowState.manage(win);
   win.show();
   win.on('close', () => {
-    let winSettings = {
-      isMaximised: win.isMaximized(),
-      winSize: win.getSize(),
-      winPos: win.getPosition(),
-      winBounds: win.getBounds()
-    };
-    saveWinSettings(winSettings);
   });
 });
 
@@ -40,13 +42,14 @@ ipcMain.on('download-btn', (e, args) => {
   console.log('download');
 });
 
+ipcMain.on('MaximiseMe', (e, args) => {
+  if (!win.isMaximized()) {
+    win.maximize()
+  } else {
+    win.restore();
+  }
+});
+
 ipcMain.on('quit', (e, args) => {
   app.quit();
 });
-
-function saveWinSettings(settings) {
-  store.set('winWidth', settings.winSize[0]);
-  store.set('winHeight', settings.winSize[1]);
-  store.set('winXPos', settings.winPos[0] < 0 || settings.winPos[0] > settings.winBounds.width ? 0 : settings.winPos[0]);
-  store.set('winYPos', settings.winPos[1] < 0 || settings.winPos[1] > settings.winBounds.height ? 0 : settings.winPos[1]);
-}
