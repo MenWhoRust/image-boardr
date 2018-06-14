@@ -40,11 +40,13 @@
   flex-direction: column;
 }
 
-.metadata-container div {
+.metadata-container .metadata-group {
   width: 25vw;
 }
 
 .metadata-group {
+  display: flex;
+  flex-direction: column;
   background-color: rgb(61, 61, 61);
   overflow: hidden;
   margin-bottom: 10px;
@@ -59,7 +61,6 @@
 }
 
 .metadata-content {
-  max-height: 100%;
   color: white;
   overflow-x: hidden;
   overflow-y: auto;
