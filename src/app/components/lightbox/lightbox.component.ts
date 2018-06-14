@@ -60,6 +60,16 @@ export class LightboxComponent implements OnInit {
 
   active = false;
 
+  constructor(private electron: ElectronService) {
+  }
+
+  ngOnInit() {
+  }
+
+  loaded() {
+    this.isLoaded = !this.isLoaded;
+  }
+
   handleState(event) {
     switch (event.triggerName) {
       case 'lightboxAnimate':
@@ -83,16 +93,6 @@ export class LightboxComponent implements OnInit {
         break;
 
     }
-  }
-
-  constructor(private electron: ElectronService) {
-  }
-
-  ngOnInit() {
-  }
-
-  loaded() {
-    this.isLoaded = !this.isLoaded;
   }
 
   download(fileUrl) {
