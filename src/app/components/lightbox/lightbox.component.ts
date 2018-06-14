@@ -25,7 +25,7 @@ import {Post} from '../../types/Konachan';
       ])
     ]),
     trigger('infoOpen', [
-      state('true', style({width: '30%'})),
+      state('false', style({width: 0})),
       transition('false <=> true', [
         animate(500)
       ])

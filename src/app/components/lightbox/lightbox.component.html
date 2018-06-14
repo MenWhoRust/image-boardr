@@ -89,30 +89,32 @@
         </svg>
       </div>
     </div>
-    <div class="tags-container" [@infoOpen]="isInfoOpen" (@infoOpen.start)="handleState($event)"
-         (@infoOpen.done)="handleState($event)" ClickOutside (clickOutside)="toggleInfo($event)">
-      <!--<div class="row justify-content-center">-->
-      <!--<div class="action-button-relative action-button-color text-dark" (click)="download(posts[index].file_url)">-->
-      <!--<i class="fas fa-download"></i>-->
-      <!--</div>-->
-      <!--</div>-->
-      <div [@infoAnim]="infoTagAnimTrigger" class="info-width">
-        <div>
-          <div>Post Author:</div>
-          <div>{{ posts[index].author }}</div>
-        </div>
-        <div>
-          <div>Date Created:</div>
-          <div>{{ posts[index].created_at * 1000 | date:'yyyy-MM-dd'}}</div>
-        </div>
-        <div>
-          <div class="text-light">Source:</div>
-          <div>{{posts[index].source === '' ? 'Unknown' : posts[index].source}}</div>
-        </div>
-        <div>
-          <div>Tags:</div>
-          <span class="btn btn-pill action-button-color text-light m-1 col-sm-auto tag"
-                 *ngFor="let tag of posts[index].tags.split(' ')">{{tag}}</span>
+  </div>
+  <div class="tags-container" [@infoOpen]="isInfoOpen" (@infoOpen.start)="handleState($event)"
+       (@infoOpen.done)="handleState($event)" ClickOutside (clickOutside)="toggleInfo($event)">
+    <!--<div class="row justify-content-center">-->
+    <!--<div class="action-button-relative action-button-color text-dark" (click)="download(posts[index].file_url)">-->
+    <!--<i class="fas fa-download"></i>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="metadata-container" [@infoAnim]="infoTagAnimTrigger">
+      <div class="metadata-group">
+        <div class="metadata-title">Post Author:</div>
+        <div class="metadata-content">{{ posts[index].author }}</div>
+      </div>
+      <div class="metadata-group">
+        <div class="metadata-title">Date Created:</div>
+        <div class="metadata-content">{{ posts[index].created_at * 1000 | date:'yyyy-MM-dd'}}</div>
+      </div>
+      <div class="metadata-group">
+        <div class="metadata-title">Source:</div>
+        <div class="metadata-content">{{posts[index].source === '' ? 'Unknown' : posts[index].source}}</div>
+      </div>
+      <div class="metadata-group tags-group">
+        <div class="metadata-title">Tags:</div>
+        <div class="metadata-content pb-5">
+        <span (click)="openConfirmMessage(tag)" class="btn btn-pill action-button-color text-light m-1 col-sm-auto"
+              *ngFor="let tag of posts[index].tags.split(' ')">{{tag}}</span>
         </div>
       </div>
     </div>
