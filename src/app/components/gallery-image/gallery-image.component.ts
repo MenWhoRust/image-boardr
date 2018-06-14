@@ -74,9 +74,7 @@ export class GalleryImageComponent implements OnInit {
     component.instance.index = this.postIndex;
     component.instance.destroyCheck
       .subscribe(v => {
-        if (v === 'kill me') {
           component.destroy();
-        }
       });
   }
 }

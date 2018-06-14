@@ -46,6 +46,7 @@ export class LightboxComponent implements OnInit {
 
 
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
+  @Output() tagClicked: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
   index: number;
@@ -67,7 +68,7 @@ export class LightboxComponent implements OnInit {
         }
 
         if (event.fromState === true && event.toState === false && event.phaseName === 'done') {
-          this.destroyCheck.emit('kill me');
+          this.destroyCheck.emit();
         }
         break;
 
@@ -144,7 +145,9 @@ export class LightboxComponent implements OnInit {
     debounce();
   }
 
-  openConfirmMessage(source) {
+  openConfirmMessage(tag) {
     // TODO: Implement this
+    this.tagClicked.emit(tag);
+    this.destroyCheck.emit();
   }
 }
