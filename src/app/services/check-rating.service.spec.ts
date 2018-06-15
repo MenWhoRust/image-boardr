@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CheckRatingService } from './check-rating.service';
+import { BoardRatingService } from './board-rating.service';
 
-describe('CheckRatingService', () => {
+describe('BoardRatingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CheckRatingService]
+      providers: [BoardRatingService]
     });
   });
 
-  it('should be created', inject([CheckRatingService], (service: CheckRatingService) => {
+  it('should be created', inject([BoardRatingService], (service: BoardRatingService) => {
     expect(service).toBeTruthy();
   }));
 });
