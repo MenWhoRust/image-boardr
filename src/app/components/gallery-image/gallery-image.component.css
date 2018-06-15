@@ -1,3 +1,7 @@
 .no-opacity {
   opacity: 0;
 }
+ .img-clickable {
+   overflow: hidden;
+   border-radius: 10px;
+ }
