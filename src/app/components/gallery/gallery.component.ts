@@ -2,7 +2,7 @@ import {
   Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, OnInit, ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {GetPostsService} from '../../services/getposts.service';
+import {BoardApiService} from '../../services/board-api.service';
 import {Konachan, Post} from '../../types/Konachan';
 import {LightboxComponent} from '../lightbox/lightbox.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -65,6 +65,7 @@ export class GalleryComponent implements OnInit {
   // TODO: Load the previous session's search terms
   constructor(private getPosts: GetPostsService) {
     this.searchTerms = new SearchTerms('', this.pageSize, true, false, false);
+  constructor(private apiService: BoardApiService) {
   }
 
   // Load default posts
@@ -92,7 +93,7 @@ export class GalleryComponent implements OnInit {
     // Remove all previous items from the masonry grid
     this.removeAllItems();
     // TODO: Need to make the returned type depend on what image board is selected
-    this.getPosts.getPosts<Konachan>(this.searchTerms, page).then(
+    this.apiService.getPosts<Konachan>(searchTerms, page).then(
       response => {
         console.log(response);
 

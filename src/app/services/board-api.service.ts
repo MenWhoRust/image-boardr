@@ -7,7 +7,7 @@ import {SearchTerms} from '../types/SearchTerms';
 
 
 @Injectable()
-export class GetPostsService {
+export class BoardApiService {
 
   constructor(private  http: HttpClient, private parser: XmlParserService) {
   }
@@ -24,6 +24,10 @@ export class GetPostsService {
       {responseType: 'text'})
       .map(x => this.parser.ParseXml<T>(x))
       .toPromise();
+  }
+
+  getComments<T>(postId: number) {
+    // TODO: Implement this
   }
 }
 

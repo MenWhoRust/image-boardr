@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-import {GetPostsService} from './services/getposts.service';
+import {BoardApiService} from './services/board-api.service';
 import {TitleBarComponent} from './components/title-bar/title-bar.component';
 import {NgxElectronModule} from 'ngx-electron';
 import {SearchBarComponent} from './components/search-bar/search-bar.component';
@@ -44,7 +44,7 @@ import { ClickOutsideDirective } from './Directives/click-outside.directive';
     FormsModule
   ],
   providers: [
-    GetPostsService,
+    BoardApiService,
     XmlParserService,
     BoardRatingService
   ],
