@@ -6,7 +6,7 @@
   </div>
   <div class="lightbox-content">
     <div *ngIf="!isLoaded " class="loader"></div>
-    <img [@imageFade]="isLoaded" class="div-img" src="{{posts[index].file_url}}"
+    <img [@imageFade]="isLoaded" class="div-img" src="{{posts[index].jpeg_url}}"
          (load)="loaded();">
     <div class="d-flex position-absolute align-self-end pb-2">
       <div class="prev-btn" (click)="changePost('back')">
