@@ -1,16 +1,16 @@
 <div class="container-fluid d-flex flex-column gallery bg-light p-0">
-  <app-search-bar [searchTerms]="searchTerms" (searchTermsChange)="setSearchTerms($event)"></app-search-bar>
-  <div #flexGallery class="flex-gallery mx-2" [ngClass]="isInErrorState ? 'align-items-center justify-content-center' : ''">
-    <div *ngIf="!isLoaded" class="loader flex-loader"></div>
-    <app-error-display *ngIf="isInErrorState" [errorMessage]="errorMessage"></app-error-display>
-    <div [ngStyle]="{'display': isInErrorState ? 'none': 'block'}" #galleryContainer class="row-height">
+  <app-search-bar [searchTerms]="searchTerms" (searchTermsChange)="goToPage(1, $event)"></app-search-bar>
+  <div #flexGallery class="flex-gallery mx-2" [ngClass]="galleryProps.getIsInErrorState ? 'align-items-center justify-content-center' : ''">
+    <div *ngIf="!galleryProps.getIsLoaded" class="loader flex-loader"></div>
+    <app-error-display *ngIf="galleryProps.getIsInErrorState" [errorMessage]="errorMessage"></app-error-display>
+    <div [ngStyle]="{'display': galleryProps.getIsInErrorState ? 'none': 'block'}" #galleryContainer class="row-height">
       <ng-masonry-grid
         (onNgMasonryInit)="onNgMasonryInit($event)"
         [masonryOptions]="{ addStatus: 'append', transitionDuration: '0.5s', columnWidth: 300, gutter: 5, fitWidth: true }"
         [useAnimation]="true"
         class="pt-2">
         <ng-masonry-grid-item
-          *ngFor="let post of posts | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: totalItems}; let x = index"
+          *ngFor="let post of galleryProps.posts | paginate: {itemsPerPage: galleryProps.getPageSize, currentPage: galleryProps.getPage, totalItems: galleryProps.getTotalItems}; let x = index"
           @animateImages>
           <!-- Pass an index reference to the gallery-image-->
           <app-gallery-image [container]="container" [post]="post" [postIndex]="x" (lightBoxCreated)="setLightboxVariables($event)"></app-gallery-image>

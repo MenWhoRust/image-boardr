@@ -11,6 +11,7 @@ import {SearchTerms} from '../../types/SearchTerms';
 import {isNullOrUndefined} from 'util';
 import {Observable} from 'rxjs/Observable';
 import {IErrorMessage} from '../../types/IErrorMessage';
+import {GalleryProps} from '../../types/GalleryProps';
 
 
 @Component({
@@ -38,20 +39,10 @@ export class GalleryComponent implements OnInit {
   // Holds information about the current posts, page, page size,
   // total items and search terms
   ///////////////////////////////////////////////
-  posts: Post[] = [];
-  page = 1;
-  pageSize = 50;
+  galleryProps: GalleryProps;
   searchTerms: SearchTerms;
-  totalItems: number;
   //////////////////////////////////////////////
-
-  // Application State variables
   // TODO: Migrate state management to Redux?
-  /////////////////////////
-  isLoaded = false;
-  isFetching: boolean;
-  isInErrorState = false;
-  ////////////////////////
 
   // Masonry grid display for posts
   private _masonry: Masonry;
@@ -60,34 +51,29 @@ export class GalleryComponent implements OnInit {
   errorMessage: IErrorMessage;
 
 
-  // Create a reference to the GetPostsService
+  // Create a reference to the BoardApiService
   // Initializes default SearchTerms object
   // TODO: Load the previous session's search terms
-  constructor(private getPosts: GetPostsService) {
-    this.searchTerms = new SearchTerms('', this.pageSize, true, false, false);
   constructor(private apiService: BoardApiService) {
+    this.galleryProps = new GalleryProps([], 1, 50, false, false);
+    this.searchTerms = new SearchTerms('', this.galleryProps.getPageSize, true, false, false);
   }
 
   // Load default posts
   // TODO: Might be better to leave it blank on first launch and display a message
   ngOnInit() {
-    this.goToPage(this.page);
+    this.goToPage(this.galleryProps.getPage);
   }
 
-  goToPage(page: number) {
+  goToPage(page: number, searchTerms = this.searchTerms) {
 
     // If the request has not completed then return
-    if (this.isFetching) {
+    if (this.galleryProps.getIsFetching) {
       return;
     }
-    // If no search terms are passed then use the component variable
-
-    // We are fetching new posts so we set a true isLoaded to false
-    this.isLoaded = false;
 
     // Make sure all state variable are in their proper state before fetching new posts
-    this.isFetching = true;
-    this.isInErrorState = false;
+    this.galleryProps.hideGallery(true);
     this.panel.nativeElement.scrollTop = 0;
 
     // Remove all previous items from the masonry grid
@@ -100,9 +86,7 @@ export class GalleryComponent implements OnInit {
         // If there are no posts matching a query the api doesn't return an empty response
         // So I need to handle when the posts count is 0
         if (Number(response.posts.count) === 0) {
-          this.isInErrorState = true;
-          this.isLoaded = true;
-          this.isFetching = false;
+          this.galleryProps.galleryErrored();
           this.errorMessage = {
             messageTitle: 'Could not find any results',
             messageContent: 'Seems there are no images with those tags'
@@ -113,21 +97,15 @@ export class GalleryComponent implements OnInit {
         // Adding items to the masonry grid
         // Put it in a Timeout to make sure animations do not clash
         setTimeout(() => {
-          this.pageSize = this.searchTerms.pageSize;
-          this.totalItems = response.posts.count;
-          this.page = page;
+          this.galleryProps.setPageSize = searchTerms.pageSize;
+          this.galleryProps.setTotalItems = response.posts.count;
+          this.galleryProps.setPage = page;
 
           this.addItems(response.posts.post);
 
-          this.isLoaded = true;
-          this.isFetching = false;
+          this.galleryProps.displayGallery();
           console.log('State Variables');
-          console.log('isLoaded: ' + this.isLoaded);
-          console.log('isFetching: ' + this.isFetching);
-          console.log('pageSize: ' + this.pageSize);
-          console.log('page: ' + this.page);
-          console.log('totalItems: ' + this.totalItems);
-          console.log('posts: ' + this.posts.length);
+          console.log(this.galleryProps);
         }, 600);
 
       }, (error: Response) => {
@@ -136,9 +114,7 @@ export class GalleryComponent implements OnInit {
         if (error.status === 0) {
           this.removeAllItems();
           setTimeout(() => {
-              this.isLoaded = true;
-              this.isInErrorState = true;
-              this.isFetching = false;
+              this.galleryProps.galleryErrored();
               this.errorMessage = {
                 messageTitle: 'No Internet Connection.',
                 messageContent: 'You can retry by clicking the search button.'
@@ -151,10 +127,6 @@ export class GalleryComponent implements OnInit {
 
   // Sends a request will the search terms received from
   // the search bar component
-  setSearchTerms(searchTerms: SearchTerms) {
-    this.searchTerms = searchTerms;
-    this.goToPage(1);
-  }
 
   // When the Masonry grid finishes init
   // assign the events value to the _masonry variable
@@ -163,27 +135,35 @@ export class GalleryComponent implements OnInit {
   }
 
   // Removes all items from the masonry grid
+  // TODO: Make the masonry grid have responsive sizes
+  // TODO: Throws and error when there is no internet. Needs to fail gracefully
   removeAllItems() {
+    console.log(this._masonry);
     if (this._masonry) {
+      console.log(this._masonry);
       this._masonry.removeAllItems()
         .subscribe((items: MasonryGridItem) => {
-          this.isLoaded = false;
-          this.posts = [];
+          this.galleryProps.setIsLoaded = false;
+          this.galleryProps.posts = [];
         });
     }
   }
 
   // Adds items to the masonry grid
   addItems(items) {
+    if (!items) {
+      this._masonry.setAddStatus('add');
+      this.galleryProps.posts = [];
+    }
     if (this._masonry) {
       this._masonry.setAddStatus('add');
-      this.posts = items;
+      this.galleryProps.posts = items;
     }
   }
 
   // Set the lightbox posts variable so that it is only set when a lightbox is created
   // Instead of having each gallery-image component contain its own copy of posts
   setLightboxVariables(event: ComponentRef<LightboxComponent>) {
-    event.instance.posts = this.posts;
+    event.instance.posts = this.galleryProps.posts;
   }
 }
