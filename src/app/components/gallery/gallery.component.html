@@ -1,6 +1,6 @@
-<div class="container-fluid d-flex flex-column gallery bg-light p-0">
+<div #flexGallery class="container-fluid d-flex flex-column gallery bg-light p-0">
   <app-search-bar [searchTerms]="searchTerms" (searchTermsChange)="goToPage(1, $event)"></app-search-bar>
-  <div #flexGallery class="flex-gallery mx-2" [ngClass]="galleryProps.getIsInErrorState ? 'align-items-center justify-content-center' : ''">
+  <div  class="flex-gallery mx-2" [ngClass]="galleryProps.getIsInErrorState ? 'align-items-center justify-content-center' : ''">
     <div *ngIf="!galleryProps.getIsLoaded" class="loader flex-loader"></div>
     <app-error-display *ngIf="galleryProps.getIsInErrorState" [errorMessage]="errorMessage"></app-error-display>
     <div [ngStyle]="{'display': galleryProps.getIsInErrorState ? 'none': 'block'}" #galleryContainer class="row-height">
