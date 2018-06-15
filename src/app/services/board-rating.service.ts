@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class CheckRatingService {
+export class BoardRatingService {
 
   constructor() { }
 
   // Checks the rating bools passed to it and returns a suitable tag
-  checkRating(isSafe, isQuestionable, isExplicit) {
+  checkKonachanRating(isSafe, isQuestionable, isExplicit) {
     if (isSafe && !isQuestionable && !isExplicit) {
       return 'rating:s';
     }
