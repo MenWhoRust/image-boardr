@@ -18,8 +18,7 @@ import {BoardRatingService} from './services/board-rating.service';
 import {FormsModule} from '@angular/forms';
 import { ErrorDisplayComponent } from './components/error-display/error-display.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
-import { UrlPipePipe } from './url-pipe.pipe';
-import { UrlPipe } from './pipes/url.pipe';
+import { PostSourceComponent } from './components/post-source/post-source.component';
 
 
 
@@ -34,8 +33,7 @@ import { UrlPipe } from './pipes/url.pipe';
     GalleryImageComponent,
     ErrorDisplayComponent,
     ClickOutsideDirective,
-    UrlPipePipe,
-    UrlPipe
+    PostSourceComponent
 
   ],
   imports: [
