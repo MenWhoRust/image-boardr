@@ -94,6 +94,9 @@ export class LightboxComponent implements OnInit {
 
     }
   }
+  closeModal() {
+    this.active = false;
+  }
 
   download(fileUrl) {
     this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
@@ -105,10 +108,6 @@ export class LightboxComponent implements OnInit {
     } else {
       this.isInfoOpen = false;
     }
-  }
-
-  closeModal() {
-    this.active = false;
   }
 
   isEscape(event) {
@@ -145,9 +144,8 @@ export class LightboxComponent implements OnInit {
     debounce();
   }
 
-  openConfirmMessage(tag) {
-    // TODO: Implement this
+  searchTag(tag) {
     this.tagClicked.emit(tag);
-    this.destroyCheck.emit();
+    this.closeModal();
   }
 }

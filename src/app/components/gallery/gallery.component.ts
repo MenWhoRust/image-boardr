@@ -72,6 +72,11 @@ export class GalleryComponent implements OnInit {
       return;
     }
 
+    // Make sure the searchTerms are consistent
+    if (searchTerms !== this.searchTerms) {
+      this.searchTerms = searchTerms;
+    }
+
     // Make sure all state variable are in their proper state before fetching new posts
     this.galleryProps.hideGallery(true);
     this.panel.nativeElement.scrollTop = 0;
@@ -125,9 +130,6 @@ export class GalleryComponent implements OnInit {
       });
   }
 
-  // Sends a request will the search terms received from
-  // the search bar component
-
   // When the Masonry grid finishes init
   // assign the events value to the _masonry variable
   onNgMasonryInit($event: Masonry) {
@@ -165,5 +167,14 @@ export class GalleryComponent implements OnInit {
   // Instead of having each gallery-image component contain its own copy of posts
   setLightboxVariables(event: ComponentRef<LightboxComponent>) {
     event.instance.posts = this.galleryProps.posts;
+    event.instance.tagClicked.subscribe( tag => {
+      this.goToPage(1,
+        new SearchTerms(
+          tag,
+          this.searchTerms.pageSize,
+          this.searchTerms.isSafe,
+          this.searchTerms.isQuestionable,
+          this.searchTerms.isExplicit));
+    });
   }
 }

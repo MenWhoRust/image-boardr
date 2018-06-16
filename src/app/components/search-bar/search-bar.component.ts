@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {SearchTerms} from '../../types/SearchTerms';
 
 @Component({
@@ -6,7 +6,7 @@ import {SearchTerms} from '../../types/SearchTerms';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnChanges {
 
   @Input()
   searchTerms: SearchTerms;
@@ -27,6 +27,15 @@ export class SearchBarComponent implements OnInit {
 
   // Initialises the search bar with default terms from the parent
   ngOnInit() {
+    this.isSafe = this.searchTerms.isSafe;
+    this.isQuestionable = this.searchTerms.isQuestionable;
+    this.isExplicit = this.searchTerms.isExplicit;
+    this.tags = this.searchTerms.tags;
+    this.pageSize = this.searchTerms.pageSize;
+  }
+
+  // Reassigns terms when the value of searchTerms changes
+  ngOnChanges(changes: SimpleChanges): void {
     this.isSafe = this.searchTerms.isSafe;
     this.isQuestionable = this.searchTerms.isQuestionable;
     this.isExplicit = this.searchTerms.isExplicit;
