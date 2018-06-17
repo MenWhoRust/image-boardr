@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IErrorMessage} from '../../types/IErrorMessage';
+import {IErrorMessage} from '../../interfaces/IErrorMessage';
 
 @Component({
   selector: 'app-error-display',

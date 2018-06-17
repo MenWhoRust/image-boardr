@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
-import {IWindowSettings} from '../../types/IWindowSettings';
-import {t} from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-title-bar',

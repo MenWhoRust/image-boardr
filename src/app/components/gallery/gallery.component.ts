@@ -10,7 +10,7 @@ import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
 import {SearchTerms} from '../../types/SearchTerms';
 import {isNullOrUndefined} from 'util';
 import {Observable} from 'rxjs/Observable';
-import {IErrorMessage} from '../../types/IErrorMessage';
+import {IErrorMessage} from '../../interfaces/IErrorMessage';
 import {GalleryProps} from '../../types/GalleryProps';
 
 
