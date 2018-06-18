@@ -1,2 +1,2 @@
 <span *ngIf="!shorten(url).isUrl">{{shorten(url).text === '' ? 'Unknown' : shorten(url).text}}</span>
-<a class="btn btn-pill btn-secondary" (click)="openBrowser(url)" *ngIf="shorten(url).isUrl">{{shorten(url).text}}</a>
+<span *ngIf="shorten(url).isUrl" class="btn btn-pill btn-secondary" (click)="openBrowser(url)" >{{shorten(url).text}}</span>

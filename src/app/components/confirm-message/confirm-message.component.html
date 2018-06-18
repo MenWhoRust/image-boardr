@@ -1,0 +1,10 @@
+<div class="modal-backdrop d-flex justify-content-center align-items-center">
+    <div (click)="log('sdfsdfsd')" class="d-flex flex-column justify-content-center align-items-center message-modal">
+      <h1 class="text-center">{{message.messageTitle}}</h1>
+      <p class="text-center" [innerHTML]="message.messageContent"></p>
+      <div class="d-flex flex-row">
+        <button (click)="messageResult(true)">Yes, brave the unknown</button>
+        <button (click)="messageResult(false)">No, the unknown is scary</button>
+      </div>
+    </div>
+  </div>

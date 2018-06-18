@@ -1,8 +1,20 @@
 import _ from 'lodash';
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  ComponentFactory,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild, ViewContainerRef
+} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Post} from '../../types/Konachan';
+import {ConfirmMessageComponent} from '../confirm-message/confirm-message.component';
 
 @Component({
   selector: 'app-lightbox',
@@ -44,6 +56,13 @@ export class LightboxComponent implements OnInit {
   @ViewChild('infoBtn')
   infoBtn: ElementRef;
 
+  @ViewChild('lightbox', {read: ViewContainerRef})
+  container: ViewContainerRef;
+
+  @ViewChild('tagsContainer')
+  tagsContainer: ElementRef;
+
+
 
   @Output() destroyCheck: EventEmitter<string> = new EventEmitter<string>();
   @Output() tagClicked: EventEmitter<string> = new EventEmitter<string>();
@@ -60,7 +79,7 @@ export class LightboxComponent implements OnInit {
 
   active = false;
 
-  constructor(private electron: ElectronService) {
+  constructor(private electron: ElectronService, private resolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
@@ -70,7 +89,7 @@ export class LightboxComponent implements OnInit {
     this.isLoaded = !this.isLoaded;
   }
 
-  handleState(event) {
+  handleAnimationState(event) {
     switch (event.triggerName) {
       case 'lightboxAnimate':
         if (event.fromState === 'void' && event.phaseName === 'done') {
@@ -83,7 +102,6 @@ export class LightboxComponent implements OnInit {
         break;
 
       case 'infoOpen':
-        console.log(event);
         if (event.fromState === false && event.phaseName === 'done' && event.toState === true) {
           this.infoTagAnimTrigger = true;
         }
@@ -94,25 +112,14 @@ export class LightboxComponent implements OnInit {
 
     }
   }
-  closeModal() {
-    this.active = false;
-  }
-
-  download(fileUrl) {
-    this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
-  }
 
   toggleInfo(event) {
     if (this.infoBtn.nativeElement.contains(event.target)) {
       this.isInfoOpen = !this.isInfoOpen;
+    } else if (this.tagsContainer.nativeElement.contains(event.target)) {
+      return;
     } else {
       this.isInfoOpen = false;
-    }
-  }
-
-  isEscape(event) {
-    if (event.keyCode === 27) {
-      this.closeModal();
     }
   }
 
@@ -144,8 +151,46 @@ export class LightboxComponent implements OnInit {
     debounce();
   }
 
+  confirmOpenUrl(url: string) {
+    this.isInfoOpen = false;
+    const factory: ComponentFactory<ConfirmMessageComponent> = this.resolver.resolveComponentFactory(ConfirmMessageComponent);
+    const component: ComponentRef<ConfirmMessageComponent> = this.container.createComponent(factory);
+    component.instance.message = {
+      messageTitle: 'Are You Sure?',
+      messageContent: `Continuing will open a new window in your browser. <br/>Where this link will take you, I don't know.`
+    };
+    component.instance.isConfirmed.subscribe(e => {
+      if (e === true) {
+        this.electron.shell.openExternal(url);
+      }
+      component.destroy();
+    });
+  }
+
+  closeModal() {
+    this.active = false;
+  }
+
+  download(fileUrl) {
+    this.electron.ipcRenderer.send('download-btn', {url: fileUrl});
+  }
+
+  isEscape(event) {
+    if (event.keyCode === 27) {
+      this.closeModal();
+    }
+  }
+
+  tagFormatter(tag: string) {
+    return tag.replace(new RegExp(/_/g), ' ');
+  }
+
   searchTag(tag) {
     this.tagClicked.emit(tag);
     this.closeModal();
+  }
+
+  stopDrag() {
+    return false;
   }
 }

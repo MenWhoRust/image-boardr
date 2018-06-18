@@ -37,7 +37,8 @@ import {LightboxComponent} from '../lightbox/lightbox.component';
 // TODO: Maybe highlight the current image selected in the lightbox; can use an index for this
 export class GalleryImageComponent implements OnInit {
 
-  @Output() lightBoxCreated: EventEmitter<ComponentRef<LightboxComponent>> = new EventEmitter<ComponentRef<LightboxComponent>>();
+  @Output()
+  lightBoxCreated: EventEmitter<ComponentRef<LightboxComponent>> = new EventEmitter<ComponentRef<LightboxComponent>>();
 
   @Input()
   post: Post;

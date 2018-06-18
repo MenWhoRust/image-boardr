@@ -1,5 +1,6 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ComponentFactory, ComponentRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
+import {LightboxComponent} from '../lightbox/lightbox.component';
 
 @Component({
   selector: 'app-post-source',
@@ -11,8 +12,11 @@ export class PostSourceComponent implements OnInit, OnChanges {
   @Input()
   url: string;
 
+  @Output()
+  openUrl: EventEmitter<string> = new EventEmitter<string>();
+
   regex: RegExp = new RegExp(/\w+:\/\/([\w\.-]+)/);
-  constructor(private electron: ElectronService) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -22,9 +26,7 @@ export class PostSourceComponent implements OnInit, OnChanges {
   }
 
   shorten(value: string): any {
-    console.log('service value', value);
     const matches = this.regex.exec(value);
-    console.log('matches', matches);
     if (matches !== null) {
 
       return { text: matches[1], isUrl: true};
@@ -33,7 +35,6 @@ export class PostSourceComponent implements OnInit, OnChanges {
   }
 
   openBrowser(url: string) {
-    this.electron.shell.openExternal(url);
+    this.openUrl.emit(this.url);
   }
-
 }

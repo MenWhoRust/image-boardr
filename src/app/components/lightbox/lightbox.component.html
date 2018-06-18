@@ -108,7 +108,7 @@
       </div>
       <div class="metadata-group">
         <div class="metadata-title">Source:</div>
-        <div class="metadata-content p-1"><app-post-source [url]="posts[index].source"></app-post-source></div>
+        <div class="metadata-content p-1"><app-post-source (openUrl)="confirmOpenUrl($event)" [url]="posts[index].source"></app-post-source></div>
       </div>
       <div class="metadata-group tags-group">
         <div class="metadata-title">Tags:</div>

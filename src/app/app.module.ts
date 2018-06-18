@@ -19,11 +19,12 @@ import {FormsModule} from '@angular/forms';
 import { ErrorDisplayComponent } from './components/error-display/error-display.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { PostSourceComponent } from './components/post-source/post-source.component';
+import { ConfirmMessageComponent } from './components/confirm-message/confirm-message.component';
 
 
 
 @NgModule({
-  entryComponents: [LightboxComponent],
+  entryComponents: [LightboxComponent, ConfirmMessageComponent],
   declarations: [
     AppComponent,
     TitleBarComponent,
@@ -33,7 +34,8 @@ import { PostSourceComponent } from './components/post-source/post-source.compon
     GalleryImageComponent,
     ErrorDisplayComponent,
     ClickOutsideDirective,
-    PostSourceComponent
+    PostSourceComponent,
+    ConfirmMessageComponent,
 
   ],
   imports: [

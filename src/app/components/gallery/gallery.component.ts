@@ -10,7 +10,7 @@ import {Masonry, MasonryGridItem} from 'ng-masonry-grid';
 import {SearchTerms} from '../../types/SearchTerms';
 import {isNullOrUndefined} from 'util';
 import {Observable} from 'rxjs/Observable';
-import {IErrorMessage} from '../../interfaces/IErrorMessage';
+import {IMessage} from '../../interfaces/IMessage';
 import {GalleryProps} from '../../types/GalleryProps';
 
 
@@ -48,7 +48,7 @@ export class GalleryComponent implements OnInit {
   private _masonry: Masonry;
 
   // Error Message variable
-  errorMessage: IErrorMessage;
+  errorMessage: IMessage;
 
 
   // Create a reference to the BoardApiService
