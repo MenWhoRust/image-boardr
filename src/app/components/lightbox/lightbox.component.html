@@ -1,14 +1,14 @@
-<div [@lightboxAnimate]="active" (@lightboxAnimate.done)="handleState($event)"
-     (@lightboxAnimate.start)="handleState($event)" id="modal" class="modal p-0"
+<div #lightbox [@lightboxAnimate]="active" (@lightboxAnimate.done)="handleAnimationState($event)"
+     (@lightboxAnimate.start)="handleAnimationState($event)" class="lightbox-modal p-0"
      (keydown)="isEscape($event)">
   <div class="action-button-absolute d-flex action-button-color text-dark" (click)="closeModal()">
     <i class="fas fa-times"></i>
   </div>
   <div class="lightbox-content">
     <div *ngIf="!isLoaded " class="loader"></div>
-    <img [@imageFade]="isLoaded" class="div-img" src="{{posts[index].jpeg_url}}"
+    <img [@imageFade]="isLoaded" (dragstart)="stopDrag()" class="div-img" src="{{posts[index].jpeg_url}}"
          (load)="loaded();">
-    <div class="d-flex position-absolute align-self-end pb-2">
+    <div class="nav-btn-container d-flex position-absolute align-self-end pb-2">
       <div class="prev-btn" (click)="changePost('back')">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
              viewBox="0 0 50 50" width="50" height="50">
@@ -90,8 +90,8 @@
       </div>
     </div>
   </div>
-  <div class="tags-container" [@infoOpen]="isInfoOpen" (@infoOpen.start)="handleState($event)"
-       (@infoOpen.done)="handleState($event)" ClickOutside (clickOutside)="toggleInfo($event)">
+  <div #tagsContainer class="tags-container" [@infoOpen]="isInfoOpen" (@infoOpen.start)="handleAnimationState($event)"
+       (@infoOpen.done)="handleAnimationState($event)" ClickOutside (clickOutside)="toggleInfo($event)">
     <!--<div class="row justify-content-center">-->
     <!--<div class="action-button-relative action-button-color text-dark" (click)="download(posts[index].file_url)">-->
     <!--<i class="fas fa-download"></i>-->
@@ -114,9 +114,10 @@
         <div class="metadata-title">Tags:</div>
         <div class="metadata-content mx-1">
         <span (click)="searchTag(tag)" class="btn btn-pill action-button-color text-light m-1 col-sm-auto"
-              *ngFor="let tag of posts[index].tags.split(' ')">{{tag}}</span>
+              *ngFor="let tag of posts[index].tags.split(' ')">{{tagFormatter(tag)}}</span>
         </div>
       </div>
     </div>
   </div>
+  <app-comments [postId]="posts[index].id"></app-comments>
 </div>
