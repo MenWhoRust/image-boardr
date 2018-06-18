@@ -26,8 +26,10 @@ export class BoardApiService {
       .toPromise();
   }
 
-  getComments<T>(postId: number) {
-    // TODO: Implement this
+  getComments<T>(postId: number): Promise<T> {
+    return this.http.get<T>(
+      `http://konachan.com/comment.json?post_id=${postId}`)
+      .toPromise();
   }
 }
 

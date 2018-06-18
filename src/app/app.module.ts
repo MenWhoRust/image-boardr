@@ -20,6 +20,7 @@ import { ErrorDisplayComponent } from './components/error-display/error-display.
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { PostSourceComponent } from './components/post-source/post-source.component';
 import { ConfirmMessageComponent } from './components/confirm-message/confirm-message.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 
 
@@ -36,6 +37,7 @@ import { ConfirmMessageComponent } from './components/confirm-message/confirm-me
     ClickOutsideDirective,
     PostSourceComponent,
     ConfirmMessageComponent,
+    CommentsComponent
 
   ],
   imports: [
