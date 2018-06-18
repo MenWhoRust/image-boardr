@@ -15,7 +15,7 @@ export class BoardApiService {
   // Generic get posts method
   // TODO: need to check what type is passed and change the url appropriately for other image boards
   // TODO: Some apis do not return XML, need a workaround
-  getPosts<T>(searchTerms: SearchTerms, page: number) {
+  getPosts<T>(searchTerms: SearchTerms, page: number): Promise<T> {
     console.log(page);
     const firstReplace = searchTerms.tags.replace(' ', '+');
     const safeString = firstReplace.replace('&', '%26');
