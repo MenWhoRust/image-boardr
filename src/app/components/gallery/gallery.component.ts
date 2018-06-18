@@ -3,7 +3,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {BoardApiService} from '../../services/board-api.service';
-import {Konachan, Post} from '../../types/Konachan';
+import {Konachan, KonachanPost} from '../../types/Konachan';
 import {LightboxComponent} from '../lightbox/lightbox.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Masonry, MasonryGridItem} from 'ng-masonry-grid';

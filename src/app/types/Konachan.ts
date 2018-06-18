@@ -1,14 +1,14 @@
 export class Konachan {
-  posts: Posts;
+  posts: KonachanPosts;
 }
 
-export class Posts {
+export class KonachanPosts {
   count: number;
   offset: number;
-  post: Post[];
+  post: KonachanPost[];
 }
 
-export class Post {
+export class KonachanPost {
   actual_preview_height: string;
   actual_preview_width: string;
   author: string;

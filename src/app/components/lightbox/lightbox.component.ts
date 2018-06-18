@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Post} from '../../types/Konachan';
+import {KonachanPost} from '../../types/Konachan';
 import {ConfirmMessageComponent} from '../confirm-message/confirm-message.component';
 
 @Component({
@@ -71,7 +71,7 @@ export class LightboxComponent implements OnInit {
   index: number;
 
   @Input()
-  posts: Post[];
+  posts: KonachanPost[];
 
   isLoaded = false;
   isInfoOpen = false;

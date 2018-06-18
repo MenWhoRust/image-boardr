@@ -9,7 +9,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {ElectronService} from 'ngx-electron';
-import {Post} from '../../types/Konachan';
+import {KonachanPost} from '../../types/Konachan';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {LightboxComponent} from '../lightbox/lightbox.component';
 
@@ -41,7 +41,7 @@ export class GalleryImageComponent implements OnInit {
   lightBoxCreated: EventEmitter<ComponentRef<LightboxComponent>> = new EventEmitter<ComponentRef<LightboxComponent>>();
 
   @Input()
-  post: Post;
+  post: KonachanPost;
 
   @Input()
   postIndex: number;

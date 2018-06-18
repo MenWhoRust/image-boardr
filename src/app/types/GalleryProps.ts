@@ -1,7 +1,7 @@
-import {Post} from './Konachan';
+import {KonachanPost} from './Konachan';
 
 export class GalleryProps {
-  constructor(public posts: Post[],
+  constructor(public posts: KonachanPost[],
               private page: number,
               private pageSize: number,
               private isLoaded: boolean,
