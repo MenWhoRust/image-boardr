@@ -11,8 +11,8 @@ let mainWindowState;
 function createWindow() {
   win = new BrowserWindow({
     backgroundColor: '#222222',
-    minHeight: 768,
-    minWidth: 1024,
+    minHeight: 700,
+    minWidth: 1000,
     'x': mainWindowState.x,
     'y': mainWindowState.y,
     width: mainWindowState.width,
