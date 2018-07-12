@@ -27,15 +27,15 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
   // Initialises the search bar with default terms from the parent
   ngOnInit() {
-    this.isSafe = this.searchTerms.isSafe;
-    this.isQuestionable = this.searchTerms.isQuestionable;
-    this.isExplicit = this.searchTerms.isExplicit;
-    this.tags = this.searchTerms.tags;
-    this.pageSize = this.searchTerms.pageSize;
+    this.setVariables();
   }
 
   // Reassigns terms when the value of searchTerms changes
   ngOnChanges(changes: SimpleChanges): void {
+   this.ngOnInit();
+  }
+
+  setVariables() {
     this.isSafe = this.searchTerms.isSafe;
     this.isQuestionable = this.searchTerms.isQuestionable;
     this.isExplicit = this.searchTerms.isExplicit;
